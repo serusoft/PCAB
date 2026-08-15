@@ -1,1152 +1,1061 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PCAB ACADEMY - Student Portal</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <style>
-        /* ===== RESET & BASE ===== */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: #0a0e1a;
-            color: #e8f0fe;
-            scroll-behavior: smooth;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* ===== NAVIGATION ===== */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.2rem 2rem;
-            background: rgba(10, 14, 26, 0.92);
-            backdrop-filter: blur(10px);
-            border-bottom: 2px solid rgba(46, 204, 113, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .logo {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .logo span {
-            font-weight: 300;
-            -webkit-text-fill-color: #8e9ed0;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-links a {
-            font-weight: 500;
-            color: #b0c4ee;
-            transition: 0.3s;
-            padding-bottom: 0.3rem;
-            border-bottom: 2px solid transparent;
-        }
-
-        .nav-links a:hover {
-            color: #2ecc71;
-            border-bottom-color: #2ecc71;
-        }
-
-        .btn-outline {
-            border: 2px solid #2ecc71;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            color: #2ecc71;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .btn-outline:hover {
-            background: #2ecc71;
-            color: #0a0e1a;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            position: relative;
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            overflow: hidden;
-            padding: 3rem 0 2rem;
-            background: #0a0e1a;
-        }
-
-        /* Background video area */
-        .hero-video-bg {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: 0;
-            opacity: 0.22;
-            filter: brightness(0.5) saturate(1.1);
-        }
-
-        /* Dark overlay over the background video */
-        .hero::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background:
-                linear-gradient(
-                    90deg,
-                    rgba(10, 14, 26, 0.96) 0%,
-                    rgba(10, 14, 26, 0.78) 45%,
-                    rgba(10, 14, 26, 0.55) 100%
-                ),
-                linear-gradient(
-                    0deg,
-                    rgba(10, 14, 26, 0.98) 0%,
-                    rgba(10, 14, 26, 0.15) 55%,
-                    rgba(10, 14, 26, 0.65) 100%
-                );
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .hero-overlay {
-            position: relative;
-            z-index: 3;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: stretch;
-            gap: 2rem;
-        }
-
-        /* Main hero content */
-        .hero-text {
-            max-width: 760px;
-            background: rgba(10, 14, 26, 0.68);
-            backdrop-filter: blur(8px);
-            padding: 3rem;
-            border-radius: 30px;
-            border-left: 6px solid #2ecc71;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-        }
-
-        .hero-text h1 {
-            font-size: 3.8rem;
-            font-weight: 800;
-            line-height: 1.1;
-        }
-
-        .hero-text h1 i {
-            color: #2ecc71;
-            margin-right: 10px;
-        }
-
-        .hero-text .highlight {
-            color: #2ecc71;
-        }
-
-        .hero-text p {
-            margin: 1.5rem 0;
-            font-size: 1.2rem;
-            color: #c8d6f0;
-            line-height: 1.6;
-        }
-
-        .hero-btns {
-            display: flex;
-            gap: 1.2rem;
-            flex-wrap: wrap;
-        }
-
-        .btn-primary {
-            background: #2ecc71;
-            color: #0a0e1a;
-            padding: 0.9rem 2.5rem;
-            border-radius: 60px;
-            font-weight: 700;
-            font-size: 1rem;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 4px 25px rgba(46, 204, 113, 0.4);
-        }
-
-        .btn-primary:hover {
-            transform: scale(1.05);
-            background: #27ae60;
-            box-shadow: 0 6px 35px rgba(46, 204, 113, 0.6);
-        }
-
-        .btn-secondary {
-            background: transparent;
-            border: 2px solid #2ecc71;
-            color: #2ecc71;
-            padding: 0.9rem 2.5rem;
-            border-radius: 60px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: #2ecc71;
-            color: #0a0e1a;
-        }
-
-        /* ===== HERO SUBJECT VIDEOS ===== */
-        .hero-subject-videos {
-            width: 100%;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            position: relative;
-            z-index: 4;
-        }
-
-        .hero-subject-video {
-            position: relative;
-            height: 180px;
-            overflow: hidden;
-            border-radius: 24px;
-            border: 1px solid rgba(46, 204, 113, 0.35);
-            background: #111827;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.45);
-        }
-
-        .hero-subject-video video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            opacity: 0.75;
-        }
-
-        .hero-subject-video::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(
-                0deg,
-                rgba(10, 14, 26, 0.85),
-                rgba(10, 14, 26, 0.05)
-            );
-            pointer-events: none;
-        }
-
-        .hero-video-label {
-            position: absolute;
-            left: 1.2rem;
-            bottom: 1rem;
-            z-index: 2;
-            font-size: 1.1rem;
-            font-weight: 700;
-            color: white;
-        }
-
-        .hero-video-label i {
-            color: #2ecc71;
-            margin-right: 0.5rem;
-        }
-
-        /* ===== SECTION TITLES ===== */
-        .section-title {
-            font-size: 2.5rem;
-            margin: 3.5rem 0 2rem;
-            border-left: 8px solid #2ecc71;
-            padding-left: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .section-title i {
-            color: #2ecc71;
-        }
-
-        /* ===== REGISTRATION ===== */
-        .register-section {
-            background: #111827;
-            padding: 3rem 2.5rem;
-            border-radius: 30px;
-            margin: 3rem 0;
-            border: 1px solid #1f2a44;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .register-form input,
-        .register-form select {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            margin: 0.7rem 0;
-            background: #1a2338;
-            border: 1px solid #2a3a5a;
-            border-radius: 60px;
-            color: #e8f0fe;
-            font-size: 1rem;
-            transition: 0.3s;
-        }
-
-        .register-form input:focus,
-        .register-form select:focus {
-            outline: none;
-            border-color: #2ecc71;
-            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
-        }
-
-        .register-form input::placeholder {
-            color: #7a8aaa;
-        }
-
-        .checkbox-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin: 1.2rem 0;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-            background: #1a2338;
-            padding: 0.6rem 1.5rem;
-            border-radius: 50px;
-            border: 1px solid #2a3a5a;
-            cursor: pointer;
-            transition: 0.3s;
-            font-weight: 500;
-        }
-
-        .checkbox-group label:hover {
-            border-color: #2ecc71;
-            background: #1f2d48;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 1.2rem;
-            height: 1.2rem;
-            accent-color: #2ecc71;
-            cursor: pointer;
-        }
-
-        .payment-notice {
-            background: #1a2338;
-            padding: 1.8rem;
-            border-radius: 20px;
-            margin: 1.5rem 0;
-            border-left: 6px solid #2ecc71;
-            border: 1px solid #2a3a5a;
-        }
-
-        .payment-notice strong {
-            color: #2ecc71;
-            font-size: 1.1rem;
-        }
-
-        .payment-notice .number {
-            color: #f1c40f;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .btn-block {
-            width: 100%;
-            padding: 1.2rem;
-            font-size: 1.2rem;
-            border-radius: 60px;
-            background: #2ecc71;
-            color: #0a0e1a;
-            font-weight: 700;
-            border: none;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-top: 0.5rem;
-        }
-
-        .btn-block:hover {
-            background: #27ae60;
-            transform: scale(1.01);
-        }
-
-        .register-message {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        .register-message.success {
-            background: rgba(46, 204, 113, 0.15);
-            color: #2ecc71;
-            border: 1px solid #2ecc71;
-        }
-
-        .register-message.error {
-            background: rgba(231, 76, 60, 0.15);
-            color: #e74c3c;
-            border: 1px solid #e74c3c;
-        }
-
-        /* ===== STUDENT DASHBOARD ===== */
-        .dashboard-section {
-            background: #111827;
-            padding: 2.5rem;
-            border-radius: 30px;
-            margin: 3rem 0;
-            border: 1px solid #1f2a44;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .stat-card {
-            background: #1a2338;
-            padding: 1.8rem;
-            border-radius: 20px;
-            text-align: center;
-            border: 1px solid #2a3a5a;
-        }
-
-        .stat-card .number {
-            font-size: 3rem;
-            font-weight: 800;
-            color: #2ecc71;
-        }
-
-        .stat-card .label {
-            color: #8e9ed0;
-            margin-top: 0.5rem;
-        }
-
-        .status-check {
-            background: #1a2338;
-            padding: 2rem;
-            border-radius: 20px;
-            margin: 1.5rem 0;
-            border: 1px solid #2a3a5a;
-        }
-
-        .status-check input {
-            width: 70%;
-            padding: 1rem 1.5rem;
-            background: #111827;
-            border: 1px solid #2a3a5a;
-            border-radius: 60px;
-            color: #e8f0fe;
-            font-size: 1rem;
-        }
-
-        .status-check input:focus {
-            outline: none;
-            border-color: #2ecc71;
-        }
-
-        .status-check button {
-            padding: 1rem 2rem;
-            background: #2ecc71;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            color: #0a0e1a;
-            cursor: pointer;
-            transition: 0.3s;
-            margin-left: 0.5rem;
-        }
-
-        .status-check button:hover {
-            background: #27ae60;
-        }
-
-        .payment-status-result {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 10px;
-            font-weight: 600;
-        }
-
-        .payment-status-result.paid {
-            background: rgba(46, 204, 113, 0.15);
-            color: #2ecc71;
-            border: 1px solid #2ecc71;
-        }
-
-        .payment-status-result.unpaid {
-            background: rgba(231, 76, 60, 0.15);
-            color: #e74c3c;
-            border: 1px solid #e74c3c;
-        }
-
-        .payment-status-result.not-found {
-            background: rgba(241, 196, 15, 0.15);
-            color: #f1c40f;
-            border: 1px solid #f1c40f;
-        }
-
-        /* ===== VIEWS / FEEDBACK ===== */
-        .views-section {
-            background: #111827;
-            padding: 2.5rem;
-            border-radius: 30px;
-            margin: 3rem 0;
-            border: 1px solid #1f2a44;
-        }
-
-        .view-item {
-            background: #1a2338;
-            padding: 1.2rem 1.8rem;
-            border-radius: 15px;
-            margin: 0.8rem 0;
-            border-left: 4px solid #2ecc71;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .view-item .view-text {
-            flex: 1;
-        }
-
-        .view-item .view-time {
-            color: #7a8aaa;
-            font-size: 0.85rem;
-            margin-left: 1rem;
-        }
-
-        .view-input-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .view-input-group input {
-            flex: 1;
-            padding: 1rem 1.5rem;
-            background: #1a2338;
-            border: 1px solid #2a3a5a;
-            border-radius: 60px;
-            color: #e8f0fe;
-            font-size: 1rem;
-        }
-
-        .view-input-group input:focus {
-            outline: none;
-            border-color: #2ecc71;
-        }
-
-        .view-input-group button {
-            padding: 1rem 2.5rem;
-            background: #2ecc71;
-            border: none;
-            border-radius: 60px;
-            font-weight: 700;
-            color: #0a0e1a;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .view-input-group button:hover {
-            background: #27ae60;
-        }
-
-        /* ===== YOUTUBE VIDEOS ===== */
-        .videos-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .video-card {
-            background: #111827;
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid #1f2a44;
-            transition: 0.3s;
-        }
-
-        .video-card:hover {
-            transform: translateY(-5px);
-            border-color: #2ecc71;
-        }
-
-        .video-card iframe {
-            width: 100%;
-            height: 200px;
-            border: none;
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            border-top: 1px solid #1f2a44;
-            padding: 3rem 0;
-            margin-top: 4rem;
-            text-align: center;
-            color: #7a8aaa;
-        }
-
-        .footer .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 1.5rem 0;
-        }
-
-        .footer .social-links a {
-            color: #b0c4ee;
-            font-size: 1.5rem;
-            transition: 0.3s;
-        }
-
-        .footer .social-links a:hover {
-            color: #2ecc71;
-            transform: scale(1.1);
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .hero {
-                min-height: auto;
-                padding: 2rem 0;
-            }
-
-            .hero-text {
-                padding: 2rem;
-            }
-
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-
-            .hero-subject-videos {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .hero-subject-video {
-                height: 160px;
-            }
-
-            .navbar {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-                padding: 1rem;
-            }
-
-            .nav-links {
-                gap: 1rem;
-                flex-wrap: wrap;
-            }
-
-            .container {
-                padding: 0 1rem;
-            }
-
-            .register-section,
-            .dashboard-section,
-            .views-section {
-                padding: 1.5rem;
-            }
-
-            .view-input-group {
-                flex-direction: column;
-            }
-
-            .status-check input {
-                width: 100%;
-                margin-bottom: 0.5rem;
-            }
-
-            .status-check button {
-                width: 100%;
-                margin-left: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-
-            .hero-text {
-                padding: 1.5rem;
-            }
-
-            .hero-subject-video {
-                height: 140px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PCAB ACADEMY - Student Portal</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #0a0e1a;
+      color: #e8f0fe;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+      background: rgba(10, 14, 26, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 2px solid rgba(46, 204, 113, 0.25);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .logo {
+      font-size: 2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .logo span {
+      font-weight: 300;
+      -webkit-text-fill-color: #8e9ed0;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      font-weight: 500;
+      color: #b0c4ee;
+      transition: 0.3s;
+      padding-bottom: 0.3rem;
+      border-bottom: 2px solid transparent;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: #2ecc71;
+      border-bottom-color: #2ecc71;
+    }
+
+    .btn-outline {
+      border: 2px solid #2ecc71;
+      padding: 0.4rem 1.4rem;
+      border-radius: 50px;
+      color: #2ecc71;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn-outline:hover {
+      background: #2ecc71;
+      color: #0a0e1a;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 3rem 0 2rem;
+      background: #0a0e1a;
+    }
+
+    .hero-video-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0.2;
+      filter: brightness(0.45) saturate(1.2);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(90deg, rgba(10, 14, 26, 0.96) 0%, rgba(10, 14, 26, 0.70) 50%, rgba(10, 14, 26, 0.4) 100%),
+        linear-gradient(0deg, rgba(10, 14, 26, 0.92) 0%, rgba(10, 14, 26, 0.1) 60%, rgba(10, 14, 26, 0.6) 100%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-overlay {
+      position: relative;
+      z-index: 3;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      gap: 2rem;
+    }
+
+    .hero-text {
+      max-width: 780px;
+      background: rgba(10, 14, 26, 0.65);
+      backdrop-filter: blur(8px);
+      padding: 3rem;
+      border-radius: 30px;
+      border-left: 6px solid #2ecc71;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-text h1 {
+      font-size: 3.8rem;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .hero-text h1 i {
+      color: #2ecc71;
+      margin-right: 10px;
+    }
+
+    .highlight {
+      color: #2ecc71;
+    }
+
+    .hero-text p {
+      margin: 1.5rem 0;
+      font-size: 1.2rem;
+      color: #c8d6f0;
+      line-height: 1.6;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #2ecc71;
+      color: #0a0e1a;
+      padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 4px 25px rgba(46, 204, 113, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      transform: scale(1.04);
+      background: #27ae60;
+      box-shadow: 0 6px 35px rgba(46, 204, 113, 0.6);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      border: 2px solid #2ecc71;
+      color: #2ecc71;
+      padding: 0.9rem 2.5rem;
+      border-radius: 60px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary:hover {
+      background: #2ecc71;
+      color: #0a0e1a;
+    }
+
+    .hero-subject-videos {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      position: relative;
+      z-index: 4;
+    }
+
+    .hero-subject-video {
+      position: relative;
+      height: 190px;
+      overflow: hidden;
+      border-radius: 24px;
+      border: 1px solid rgba(46, 204, 113, 0.35);
+      background: #111827;
+      box-shadow: 0 15px 45px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-subject-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0.8;
+    }
+
+    .hero-subject-video::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(0deg, rgba(10, 14, 26, 0.85), rgba(10, 14, 26, 0.05));
+      pointer-events: none;
+    }
+
+    .hero-video-label {
+      position: absolute;
+      left: 1.2rem;
+      bottom: 1rem;
+      z-index: 2;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: white;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-video-label i {
+      color: #2ecc71;
+      margin-right: 0.5rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin: 3.5rem 0 2rem;
+      border-left: 8px solid #2ecc71;
+      padding-left: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-title i {
+      color: #2ecc71;
+    }
+
+    .register-section {
+      background: #111827;
+      padding: 3rem 2.5rem;
+      border-radius: 30px;
+      margin: 3rem 0;
+      border: 1px solid #1f2a44;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .register-form input,
+    .register-form select {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      margin: 0.7rem 0;
+      background: #1a2338;
+      border: 1px solid #2a3a5a;
+      border-radius: 60px;
+      color: #e8f0fe;
+      font-size: 1rem;
+      transition: 0.3s;
+    }
+
+    .register-form input:focus,
+    .register-form select:focus {
+      outline: none;
+      border-color: #2ecc71;
+      box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
+    }
+
+    .register-form input::placeholder {
+      color: #7a8aaa;
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin: 1.2rem 0;
+    }
+
+    .checkbox-group label {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #1a2338;
+      padding: 0.6rem 1.5rem;
+      border-radius: 50px;
+      border: 1px solid #2a3a5a;
+      cursor: pointer;
+      transition: 0.3s;
+      font-weight: 500;
+    }
+
+    .checkbox-group label:hover {
+      border-color: #2ecc71;
+      background: #1f2d48;
+    }
+
+    .checkbox-group input[type="checkbox"] {
+      width: 1.2rem;
+      height: 1.2rem;
+      accent-color: #2ecc71;
+      cursor: pointer;
+    }
+
+    .payment-notice {
+      background: #1a2338;
+      padding: 1.8rem;
+      border-radius: 20px;
+      margin: 1.5rem 0;
+      border-left: 6px solid #2ecc71;
+      border: 1px solid #2a3a5a;
+    }
+
+    .payment-notice strong {
+      color: #2ecc71;
+      font-size: 1.1rem;
+    }
+
+    .payment-notice .number {
+      color: #f1c40f;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .btn-block {
+      width: 100%;
+      padding: 1.2rem;
+      font-size: 1.2rem;
+      border-radius: 60px;
+      background: #2ecc71;
+      color: #0a0e1a;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 0.5rem;
+    }
+
+    .btn-block:hover {
+      background: #27ae60;
+      transform: scale(1.01);
+    }
+
+    .register-message {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .register-message.success {
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      border: 1px solid #2ecc71;
+    }
+
+    .register-message.error {
+      background: rgba(231, 76, 60, 0.15);
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
+    }
+
+    .dashboard-section {
+      background: #111827;
+      padding: 2.5rem;
+      border-radius: 30px;
+      margin: 3rem 0;
+      border: 1px solid #1f2a44;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      background: #1a2338;
+      padding: 1.8rem;
+      border-radius: 20px;
+      text-align: center;
+      border: 1px solid #2a3a5a;
+    }
+
+    .stat-card .number {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #2ecc71;
+    }
+
+    .stat-card .label {
+      color: #8e9ed0;
+      margin-top: 0.5rem;
+    }
+
+    .status-check {
+      background: #1a2338;
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 1.5rem 0;
+      border: 1px solid #2a3a5a;
+    }
+
+    .status-check input {
+      width: 70%;
+      padding: 1rem 1.5rem;
+      background: #111827;
+      border: 1px solid #2a3a5a;
+      border-radius: 60px;
+      color: #e8f0fe;
+      font-size: 1rem;
+    }
+
+    .status-check input:focus {
+      outline: none;
+      border-color: #2ecc71;
+    }
+
+    .status-check button {
+      padding: 1rem 2rem;
+      background: #2ecc71;
+      border: none;
+      border-radius: 60px;
+      font-weight: 700;
+      color: #0a0e1a;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-left: 0.5rem;
+    }
+
+    .status-check button:hover {
+      background: #27ae60;
+    }
+
+    .payment-status-result {
+      margin-top: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+      font-weight: 600;
+    }
+
+    .payment-status-result.paid {
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ecc71;
+      border: 1px solid #2ecc71;
+    }
+
+    .payment-status-result.unpaid {
+      background: rgba(231, 76, 60, 0.15);
+      color: #e74c3c;
+      border: 1px solid #e74c3c;
+    }
+
+    .payment-status-result.not-found {
+      background: rgba(241, 196, 15, 0.15);
+      color: #f1c40f;
+      border: 1px solid #f1c40f;
+    }
+
+    .views-section {
+      background: #111827;
+      padding: 2.5rem;
+      border-radius: 30px;
+      margin: 3rem 0;
+      border: 1px solid #1f2a44;
+    }
+
+    .view-item {
+      background: #1a2338;
+      padding: 1.2rem 1.8rem;
+      border-radius: 15px;
+      margin: 0.8rem 0;
+      border-left: 4px solid #2ecc71;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .view-item .view-text {
+      flex: 1;
+    }
+
+    .view-item .view-time {
+      color: #7a8aaa;
+      font-size: 0.85rem;
+      margin-left: 1rem;
+    }
+
+    .view-input-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .view-input-group input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      background: #1a2338;
+      border: 1px solid #2a3a5a;
+      border-radius: 60px;
+      color: #e8f0fe;
+      font-size: 1rem;
+      min-width: 200px;
+    }
+
+    .view-input-group input:focus {
+      outline: none;
+      border-color: #2ecc71;
+    }
+
+    .view-input-group button {
+      padding: 1rem 2.5rem;
+      background: #2ecc71;
+      border: none;
+      border-radius: 60px;
+      font-weight: 700;
+      color: #0a0e1a;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .view-input-group button:hover {
+      background: #27ae60;
+    }
+
+    .videos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .video-card {
+      background: #111827;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid #1f2a44;
+      transition: 0.3s;
+    }
+
+    .video-card:hover {
+      transform: translateY(-5px);
+      border-color: #2ecc71;
+    }
+
+    .video-card iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+
+    .footer {
+      border-top: 1px solid #1f2a44;
+      padding: 3rem 0;
+      margin-top: 4rem;
+      text-align: center;
+      color: #7a8aaa;
+    }
+
+    .footer .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0;
+    }
+
+    .footer .social-links a {
+      color: #b0c4ee;
+      font-size: 1.5rem;
+      transition: 0.3s;
+    }
+
+    .footer .social-links a:hover {
+      color: #2ecc71;
+      transform: scale(1.1);
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        min-height: auto;
+        padding: 2rem 0;
+      }
+
+      .hero-text {
+        padding: 1.8rem;
+      }
+
+      .hero-text h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-subject-videos {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+
+      .hero-subject-video {
+        height: 160px;
+      }
+
+      .container {
+        padding: 0 1rem;
+      }
+
+      .register-section,
+      .dashboard-section,
+      .views-section {
+        padding: 1.5rem;
+      }
+
+      .view-input-group {
+        flex-direction: column;
+      }
+
+      .status-check input {
+        width: 100%;
+        margin-bottom: 0.5rem;
+      }
+
+      .status-check button {
+        width: 100%;
+        margin-left: 0;
+      }
+
+      .navbar {
+        padding: 0.8rem 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-text h1 {
+        font-size: 2rem;
+      }
+
+      .hero-text {
+        padding: 1.2rem;
+      }
+
+      .hero-subject-video {
+        height: 140px;
+      }
+    }
+
+    /* Demo data notice */
+    .demo-badge {
+      display: inline-block;
+      background: #f1c40f;
+      color: #0a0e1a;
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-left: 1rem;
+    }
+  </style>
 </head>
 <body>
 
-    <!-- ===== NAVIGATION ===== -->
-    <nav class="navbar">
-        <div class="logo">PCAB <span>ACADEMY</span></div>
-        <div class="nav-links">
-            <a href="#register"><i class="fas fa-user-plus"></i> Register</a>
-            <a href="#dashboard"><i class="fas fa-chart-simple"></i> Dashboard</a>
-            <a href="#feedback"><i class="fas fa-comment"></i> Feedback</a>
-            <a href="#videos" class="btn-outline"><i class="fab fa-youtube"></i> Videos</a>
+  <nav class="navbar">
+    <div class="logo">PCAB <span>ACADEMY</span></div>
+    <div class="nav-links">
+      <a href="#register"><i class="fas fa-user-plus"></i> Register</a>
+      <a href="#dashboard"><i class="fas fa-chart-simple"></i> Dashboard</a>
+      <a href="#feedback"><i class="fas fa-comment"></i> Feedback</a>
+      <a href="#videos" class="btn-outline"><i class="fab fa-youtube"></i> Videos</a>
+    </div>
+  </nav>
+
+  <section class="hero" id="home">
+    <video class="hero-video-bg" autoplay muted loop playsinline>
+      <source src="https://videos.pexels.com/video-files/3930877/3930877-uhd_2560_1440_30fps.mp4" type="video/mp4">
+    </video>
+
+    <div class="container hero-overlay">
+      <div class="hero-text">
+        <h1>
+          <i class="fas fa-flask"></i> Pass <span class="highlight">Chemistry</span> &amp; <span class="highlight">Biology</span>
+        </h1>
+        <p>
+          Master Organic Chemistry, General Chemistry &amp; Biology with PCAB Academy.
+          Flipped classroom, exam support, and asynchronous learning at your own pace.
+        </p>
+        <div class="hero-btns">
+          <a href="#register" class="btn-primary"><i class="fas fa-user-graduate"></i> Register Now</a>
+          <a href="#dashboard" class="btn-secondary"><i class="fas fa-search"></i> Check Status</a>
         </div>
-    </nav>
+        <div style="margin-top: 1.5rem; font-size: 0.95rem; color: #8e9ed0;">
+          <i class="fas fa-phone"></i> +256709898420 &nbsp;|&nbsp;
+          <i class="fas fa-envelope"></i> kasozihenry427@gmail.com
+        </div>
+      </div>
 
-    <!-- ===== HERO ===== -->
-    <section class="hero" id="home">
-
-        <!-- Main Chemistry Background Video -->
-        <video class="hero-video-bg" autoplay muted loop playsinline>
-            <source src="chemistry-background.mp4" type="video/mp4">
-            <!-- Fallback: Use a placeholder video if the main one isn't available -->
+      <div class="hero-subject-videos">
+        <div class="hero-subject-video">
+          <video autoplay muted loop playsinline>
             <source src="https://videos.pexels.com/video-files/3930877/3930877-uhd_2560_1440_30fps.mp4" type="video/mp4">
-        </video>
-
-        <div class="container hero-overlay">
-
-            <!-- Main Hero Content -->
-            <div class="hero-text">
-
-                <h1>
-                    <i class="fas fa-flask"></i>
-                    Pass <span class="highlight">Chemistry</span>
-                    &amp;
-                    <span class="highlight">Biology</span>
-                </h1>
-
-                <p>
-                    Master Organic Chemistry, General Chemistry &amp; Biology
-                    with PCAB Academy. Flipped classroom, exam support, and
-                    asynchronous learning at your own pace.
-                </p>
-
-                <div class="hero-btns">
-                    <a href="#register" class="btn-primary">
-                        <i class="fas fa-user-graduate"></i>
-                        Register Now
-                    </a>
-
-                    <a href="#dashboard" class="btn-secondary">
-                        <i class="fas fa-search"></i>
-                        Check Status
-                    </a>
-                </div>
-
-                <div style="margin-top: 1.5rem; font-size: 0.95rem; color: #8e9ed0;">
-                    <i class="fas fa-phone"></i> +256709898420
-                    &nbsp;|&nbsp;
-                    <i class="fas fa-envelope"></i>
-                    kasozihenry427@gmail.com
-                </div>
-
-            </div>
-
-            <!-- Subject Videos Under Hero Content -->
-            <div class="hero-subject-videos">
-
-                <!-- Chemistry -->
-                <div class="hero-subject-video">
-                    <video autoplay muted loop playsinline>
-                        <source src="chemistry-short.mp4" type="video/mp4">
-                        <!-- Fallback -->
-                        <source src="https://videos.pexels.com/video-files/3930877/3930877-uhd_2560_1440_30fps.mp4" type="video/mp4">
-                    </video>
-                    <div class="hero-video-label">
-                        <i class="fas fa-flask"></i>
-                        Chemistry
-                    </div>
-                </div>
-
-                <!-- Biology -->
-                <div class="hero-subject-video">
-                    <video autoplay muted loop playsinline>
-                        <source src="biology-short.mp4" type="video/mp4">
-                        <!-- Fallback -->
-                        <source src="https://videos.pexels.com/video-files/26835943/26835943-uhd_2560_1440_30fps.mp4" type="video/mp4">
-                    </video>
-                    <div class="hero-video-label">
-                        <i class="fas fa-dna"></i>
-                        Biology
-                    </div>
-                </div>
-
-            </div>
-
+          </video>
+          <div class="hero-video-label"><i class="fas fa-flask"></i> Chemistry</div>
         </div>
+        <div class="hero-subject-video">
+          <video autoplay muted loop playsinline>
+            <source src="https://videos.pexels.com/video-files/26835943/26835943-uhd_2560_1440_30fps.mp4" type="video/mp4">
+          </video>
+          <div class="hero-video-label"><i class="fas fa-dna"></i> Biology</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+
+    <section id="register" class="register-section">
+      <h2 class="section-title">
+        <i class="fas fa-pen-alt"></i> PCAB Academy Registration
+        <span class="demo-badge"><i class="fas fa-database"></i> Local Demo</span>
+      </h2>
+      <form id="registrationForm" class="register-form">
+        <input type="text" id="studentName" placeholder="Full Name *" required />
+        <input type="text" id="studentSchool" placeholder="School / Institution *" required />
+
+        <div class="checkbox-group">
+          <label><input type="checkbox" value="Chemistry" checked /> Chemistry</label>
+          <label><input type="checkbox" value="Biology" checked /> Biology</label>
+          <label><input type="checkbox" value="Physics" checked /> Physics</label>
+        </div>
+
+        <div class="payment-notice">
+          <strong><i class="fas fa-mobile-alt"></i> 🚨 PAYMENT INSTRUCTIONS</strong><br /><br />
+          Send the registration fee to <strong>PCAB Administration</strong><br />
+          <i class="fas fa-user"></i> <strong>Ali Sentongo</strong> &nbsp;|&nbsp;
+          <i class="fas fa-phone"></i> <span class="number">0760463607</span><br /><br />
+          <span style="color: #f1c40f; font-weight: 600;">
+            <i class="fas fa-exclamation-triangle"></i> After payment, send screenshot to +256709898420 (WhatsApp)
+          </span>
+          <br />
+          <span style="color: #7a8aaa; font-size: 0.9rem;">
+            <i class="fas fa-clock"></i> Admin will confirm payment within 24 hours
+          </span>
+        </div>
+
+        <button type="submit" class="btn-block"><i class="fas fa-check-circle"></i> Register Now</button>
+        <div id="registerMessage" class="register-message"></div>
+      </form>
     </section>
 
-    <div class="container">
+    <section id="dashboard" class="dashboard-section">
+      <h2 class="section-title"><i class="fas fa-chart-simple"></i> Student Dashboard</h2>
+      <div class="stats-grid" id="statsGrid">
+        <div class="stat-card"><div class="number" id="totalStudents">0</div><div class="label">Total Students</div></div>
+        <div class="stat-card"><div class="number" id="paidStudents">0</div><div class="label">✅ Paid</div></div>
+        <div class="stat-card"><div class="number" id="unpaidStudents">0</div><div class="label">❌ Unpaid</div></div>
+      </div>
 
-        <!-- ===== REGISTRATION ===== -->
-        <section id="register" class="register-section">
-            <h2 class="section-title"><i class="fas fa-pen-alt"></i> PCAB Academy Registration</h2>
-            <form id="registrationForm" class="register-form">
-                <input type="text" id="studentName" placeholder="Full Name *" required />
-                <input type="text" id="studentSchool" placeholder="School / Institution *" required />
+      <div class="status-check">
+        <h3><i class="fas fa-search"></i> Check Your Payment Status</h3>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
+          <input type="text" id="statusSearch" placeholder="Enter your full name..." />
+          <button id="checkStatusBtn"><i class="fas fa-search"></i> Check</button>
+        </div>
+        <div id="statusResult" class="payment-status-result"></div>
+      </div>
+    </section>
 
-                <div class="checkbox-group">
-                    <label><input type="checkbox" value="Chemistry" checked /> Chemistry</label>
-                    <label><input type="checkbox" value="Biology" checked /> Biology</label>
-                    <label><input type="checkbox" value="Physics" checked /> Physics</label>
-                </div>
+    <section id="feedback" class="views-section">
+      <h2 class="section-title"><i class="fas fa-comment-dots"></i> Student Views &amp; Feedback</h2>
+      <div id="viewList"></div>
+      <div class="view-input-group">
+        <input type="text" id="viewInput" placeholder="Share your feedback or views..." />
+        <button id="submitViewBtn"><i class="fas fa-paper-plane"></i> Post</button>
+      </div>
+    </section>
 
-                <div class="payment-notice">
-                    <strong><i class="fas fa-mobile-alt"></i> 🚨 PAYMENT INSTRUCTIONS</strong><br /><br />
-                    Send the registration fee to <strong>PCAB Administration</strong><br />
-                    <i class="fas fa-user"></i> <strong>Ali Sentongo</strong> &nbsp;|&nbsp;
-                    <i class="fas fa-phone"></i> <span class="number">0760463607</span><br /><br />
-                    <span style="color: #f1c40f; font-weight: 600;">
-                        <i class="fas fa-exclamation-triangle"></i> After payment, send screenshot to +256709898420 (WhatsApp)
-                    </span>
-                    <br />
-                    <span style="color: #7a8aaa; font-size: 0.9rem;">
-                        <i class="fas fa-clock"></i> Admin will confirm payment within 24 hours
-                    </span>
-                </div>
+    <section id="videos">
+      <h2 class="section-title"><i class="fab fa-youtube"></i> Chemistry &amp; Biology Lessons</h2>
+      <div class="videos-grid">
+        <div class="video-card"><iframe src="https://www.youtube.com/embed/w6jph5wMpws?si=r0Rjy6OqBlUhNpko" allowfullscreen></iframe></div>
+        <div class="video-card"><iframe src="https://www.youtube.com/embed/p1blG4zg_Bc?si=xeK__QlzQci3FUOD" allowfullscreen></iframe></div>
+        <div class="video-card"><iframe src="https://www.youtube.com/embed/B1UX1l4Aj78?si=mOrjQYIXl-WPFrCM" allowfullscreen></iframe></div>
+        <div class="video-card"><iframe src="https://www.youtube.com/embed/998pghbXKGE?si=R3uik-Wyyx5Mx-Wp" allowfullscreen></iframe></div>
+        <div class="video-card"><iframe src="https://www.youtube.com/embed/nWRO5WA3hRM?si=WKOn_nPnALpqkcAg" allowfullscreen></iframe></div>
+        <div class="video-card"><iframe src="https://www.youtube.com/embed/scEswyD-S-Y?si=Tvx0Z_yjJCo7woR7" allowfullscreen></iframe></div>
+      </div>
+    </section>
 
-                <button type="submit" class="btn-block">
-                    <i class="fas fa-check-circle"></i> Register Now
-                </button>
-                <div id="registerMessage" class="register-message"></div>
-            </form>
-        </section>
+    <footer class="footer">
+      <p style="font-size: 1.5rem; font-weight: 700; color: #2ecc71;">PCAB ACADEMY</p>
+      <p><i class="fas fa-graduation-cap"></i> Pass Chemistry &amp; Biology</p>
+      <div class="social-links">
+        <a href="https://www.youtube.com/@passchemistryUganda" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://wa.me/256709898420" target="_blank"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:kasozihenry427@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+      <p style="font-size: 0.9rem; color: #5a6a8a;">&copy; 2026 PCAB Academy. All rights reserved.</p>
+    </footer>
 
-        <!-- ===== STUDENT DASHBOARD ===== -->
-        <section id="dashboard" class="dashboard-section">
-            <h2 class="section-title"><i class="fas fa-chart-simple"></i> Student Dashboard</h2>
+  </div>
 
-            <div class="stats-grid" id="statsGrid">
-                <div class="stat-card">
-                    <div class="number" id="totalStudents">0</div>
-                    <div class="label">Total Students</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number" id="paidStudents">0</div>
-                    <div class="label">✅ Paid</div>
-                </div>
-                <div class="stat-card">
-                    <div class="number" id="unpaidStudents">0</div>
-                    <div class="label">❌ Unpaid</div>
-                </div>
-            </div>
+  <script>
+    // ============================================================
+    // LOCAL STORAGE DATA LAYER (works in sandboxed iframes)
+    // No Firebase dependency - fully functional offline demo
+    // ============================================================
 
-            <div class="status-check">
-                <h3><i class="fas fa-search"></i> Check Your Payment Status</h3>
-                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem;">
-                    <input type="text" id="statusSearch" placeholder="Enter your full name..." />
-                    <button id="checkStatusBtn"><i class="fas fa-search"></i> Check</button>
-                </div>
-                <div id="statusResult" class="payment-status-result"></div>
-            </div>
-        </section>
+    const STORAGE_KEY_STUDENTS = 'pcab_students';
+    const STORAGE_KEY_VIEWS = 'pcab_views';
 
-        <!-- ===== FEEDBACK / VIEWS ===== -->
-        <section id="feedback" class="views-section">
-            <h2 class="section-title"><i class="fas fa-comment-dots"></i> Student Views &amp; Feedback</h2>
-            <div id="viewList">
-                <!-- Views will be rendered here -->
-            </div>
-            <div class="view-input-group">
-                <input type="text" id="viewInput" placeholder="Share your feedback or views..." />
-                <button id="submitViewBtn"><i class="fas fa-paper-plane"></i> Post</button>
-            </div>
-        </section>
+    // ---------- Data helpers ----------
+    function getStudents() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY_STUDENTS);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    }
 
-        <!-- ===== YOUTUBE VIDEOS ===== -->
-        <section id="videos">
-            <h2 class="section-title"><i class="fab fa-youtube"></i> Chemistry &amp; Biology Lessons</h2>
-            <div class="videos-grid">
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/w6jph5wMpws?si=r0Rjy6OqBlUhNpko" allowfullscreen></iframe>
-                </div>
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/p1blG4zg_Bc?si=xeK__QlzQci3FUOD" allowfullscreen></iframe>
-                </div>
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/B1UX1l4Aj78?si=mOrjQYIXl-WPFrCM" allowfullscreen></iframe>
-                </div>
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/998pghbXKGE?si=R3uik-Wyyx5Mx-Wp" allowfullscreen></iframe>
-                </div>
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/nWRO5WA3hRM?si=WKOn_nPnALpqkcAg" allowfullscreen></iframe>
-                </div>
-                <div class="video-card">
-                    <iframe src="https://www.youtube.com/embed/scEswyD-S-Y?si=Tvx0Z_yjJCo7woR7" allowfullscreen></iframe>
-                </div>
-            </div>
-        </section>
+    function saveStudents(students) {
+      localStorage.setItem(STORAGE_KEY_STUDENTS, JSON.stringify(students));
+    }
 
-        <!-- ===== FOOTER ===== -->
-        <footer class="footer">
-            <p style="font-size: 1.5rem; font-weight: 700; color: #2ecc71;">PCAB ACADEMY</p>
-            <p><i class="fas fa-graduation-cap"></i> Pass Chemistry &amp; Biology</p>
-            <div class="social-links">
-                <a href="https://www.youtube.com/@passchemistryUganda" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://wa.me/256709898420" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                <a href="mailto:kasozihenry427@gmail.com"><i class="fas fa-envelope"></i></a>
-            </div>
-            <p style="font-size: 0.9rem; color: #5a6a8a;">&copy; 2026 PCAB Academy. All rights reserved.</p>
-        </footer>
+    function getViews() {
+      try {
+        const data = localStorage.getItem(STORAGE_KEY_VIEWS);
+        return data ? JSON.parse(data) : [];
+      } catch { return []; }
+    }
 
-    </div>
+    function saveViews(views) {
+      localStorage.setItem(STORAGE_KEY_VIEWS, JSON.stringify(views));
+    }
 
-    <!-- ===== FIREBASE & APP ===== -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-        import {
-            getDatabase,
-            ref,
-            push,
-            set,
-            onValue,
-            update,
-            remove,
-            get,
-            child
-        } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-database.js";
+    // Seed with demo data if empty
+    function seedDemoData() {
+      let students = getStudents();
+      if (students.length === 0) {
+        students = [
+          { id: '1', name: 'John Mukasa', school: 'Makerere High', subjects: ['Chemistry', 'Biology'], paid: true,
+            registeredAt: '2026-08-14 10:30' },
+          { id: '2', name: 'Sarah Nakato', school: 'Kyambogo College', subjects: ['Chemistry', 'Physics'], paid: false,
+            registeredAt: '2026-08-15 09:15' },
+          { id: '3', name: 'David Opio', school: 'Namilyango SS', subjects: ['Biology', 'Physics'], paid: true,
+            registeredAt: '2026-08-13 14:45' },
+        ];
+        saveStudents(students);
+      }
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyCrP90qHmgA5tnd8K2XglZ_Opp8vsWAffg",
-            authDomain: "pocket-money-pro-bef26.firebaseapp.com",
-            projectId: "pocket-money-pro-bef26",
-            storageBucket: "pocket-money-pro-bef26.firebasestorage.app",
-            messagingSenderId: "3482377371",
-            appId: "1:3482377371:web:a627dcfe45adc3e507ba3e",
-            measurementId: "G-8JYGC81XET"
-        };
+      let views = getViews();
+      if (views.length === 0) {
+        views = [
+          { id: 'v1', text: 'This academy is amazing! The chemistry lessons are very clear.', timestamp: '2026-08-14 11:20' },
+          { id: 'v2', text: 'I love the flipped classroom approach. Biology has never been easier.', timestamp: '2026-08-15 08:00' },
+        ];
+        saveViews(views);
+      }
+    }
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+    seedDemoData();
 
-        // References
-        const studentsRef = ref(db, 'students');
-        const viewsRef = ref(db, 'views');
+    // ---------- DOM refs ----------
+    const form = document.getElementById('registrationForm');
+    const registerMessage = document.getElementById('registerMessage');
+    const viewListEl = document.getElementById('viewList');
+    const viewInput = document.getElementById('viewInput');
+    const submitViewBtn = document.getElementById('submitViewBtn');
+    const totalStudentsEl = document.getElementById('totalStudents');
+    const paidStudentsEl = document.getElementById('paidStudents');
+    const unpaidStudentsEl = document.getElementById('unpaidStudents');
+    const statusSearch = document.getElementById('statusSearch');
+    const checkStatusBtn = document.getElementById('checkStatusBtn');
+    const statusResult = document.getElementById('statusResult');
 
-        // ===== DOM Elements =====
-        const form = document.getElementById('registrationForm');
-        const registerMessage = document.getElementById('registerMessage');
-        const viewListEl = document.getElementById('viewList');
-        const viewInput = document.getElementById('viewInput');
-        const submitViewBtn = document.getElementById('submitViewBtn');
-        const totalStudentsEl = document.getElementById('totalStudents');
-        const paidStudentsEl = document.getElementById('paidStudents');
-        const unpaidStudentsEl = document.getElementById('unpaidStudents');
-        const statusSearch = document.getElementById('statusSearch');
-        const checkStatusBtn = document.getElementById('checkStatusBtn');
-        const statusResult = document.getElementById('statusResult');
+    // ---------- Render Views ----------
+    function renderViews() {
+      const views = getViews();
+      if (views.length === 0) {
+        viewListEl.innerHTML =
+          `<p style="color:#7a8aaa; text-align:center; padding:2rem;">No views yet. Be the first to share!</p>`;
+        return;
+      }
+      const reversed = [...views].reverse();
+      let html = '';
+      reversed.forEach(view => {
+        html += `
+          <div class="view-item">
+            <span class="view-text">${view.text || 'Empty view'}</span>
+            <span class="view-time">${view.timestamp || ''}</span>
+          </div>
+        `;
+      });
+      viewListEl.innerHTML = html;
+    }
 
-        // ===== Render Views =====
-        function renderViews() {
-            onValue(viewsRef, (snapshot) => {
-                const data = snapshot.val();
-                if (!data) {
-                    viewListEl.innerHTML =
-                    '<p style="color: #7a8aaa; text-align: center; padding: 2rem;">No views yet. Be the first to share!</p>';
-                    return;
-                }
-                const entries = Object.entries(data).reverse();
-                let html = '';
-                entries.forEach(([id, view]) => {
-                    html += `
-                        <div class="view-item">
-                            <span class="view-text">${view.text || 'Empty view'}</span>
-                            <span class="view-time">${view.timestamp || ''}</span>
-                        </div>
-                    `;
-                });
-                viewListEl.innerHTML = html;
-            });
-        }
+    // ---------- Render Stats ----------
+    function renderStats() {
+      const students = getStudents();
+      const total = students.length;
+      const paid = students.filter(s => s.paid === true).length;
+      const unpaid = total - paid;
+      totalStudentsEl.textContent = total;
+      paidStudentsEl.textContent = paid;
+      unpaidStudentsEl.textContent = unpaid;
+    }
 
-        // ===== Render Stats =====
-        function renderStats() {
-            onValue(studentsRef, (snapshot) => {
-                const data = snapshot.val();
-                if (!data) {
-                    totalStudentsEl.textContent = '0';
-                    paidStudentsEl.textContent = '0';
-                    unpaidStudentsEl.textContent = '0';
-                    return;
-                }
-                const students = Object.values(data);
-                const total = students.length;
-                const paid = students.filter(s => s.paid === true).length;
-                const unpaid = total - paid;
+    // ---------- Check Payment Status ----------
+    function checkPaymentStatus(name) {
+      if (!name.trim()) {
+        statusResult.className = 'payment-status-result not-found';
+        statusResult.textContent = '⚠️ Please enter your name.';
+        return;
+      }
 
-                totalStudentsEl.textContent = total;
-                paidStudentsEl.textContent = paid;
-                unpaidStudentsEl.textContent = unpaid;
-            });
-        }
+      const students = getStudents();
+      const found = students.find(s => s.name.toLowerCase() === name.trim().toLowerCase());
 
-        // ===== Check Payment Status =====
-        function checkPaymentStatus(name) {
-            if (!name.trim()) {
-                statusResult.className = 'payment-status-result not-found';
-                statusResult.textContent = '⚠️ Please enter your name.';
-                return;
-            }
+      if (!found) {
+        statusResult.className = 'payment-status-result not-found';
+        statusResult.textContent = '❌ No student found with that name. Please check spelling.';
+        return;
+      }
 
-            get(studentsRef).then((snapshot) => {
-                const data = snapshot.val();
-                if (!data) {
-                    statusResult.className = 'payment-status-result not-found';
-                    statusResult.textContent = '❌ No student found with that name.';
-                    return;
-                }
+      if (found.paid) {
+        statusResult.className = 'payment-status-result paid';
+        statusResult.textContent = '✅ Congratulations! Your payment has been confirmed. You are officially registered!';
+      } else {
+        statusResult.className = 'payment-status-result unpaid';
+        statusResult.textContent = '⏳ Payment not yet confirmed. Please complete payment and send screenshot to +256709898420.';
+      }
+    }
 
-                let found = null;
-                for (let id in data) {
-                    if (data[id].name && data[id].name.toLowerCase() === name.trim().toLowerCase()) {
-                        found = data[id];
-                        break;
-                    }
-                }
+    // ---------- Registration ----------
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('studentName').value.trim();
+      const school = document.getElementById('studentSchool').value.trim();
+      const checkboxes = document.querySelectorAll('.checkbox-group input:checked');
+      const subjects = Array.from(checkboxes).map(cb => cb.value);
 
-                if (!found) {
-                    statusResult.className = 'payment-status-result not-found';
-                    statusResult.textContent = '❌ No student found with that name. Please check your spelling.';
-                    return;
-                }
+      if (!name || !school) {
+        registerMessage.className = 'register-message error';
+        registerMessage.textContent = '⚠️ Please fill in both name and school.';
+        return;
+      }
+      if (subjects.length === 0) {
+        registerMessage.className = 'register-message error';
+        registerMessage.textContent = '⚠️ Please select at least one subject.';
+        return;
+      }
 
-                if (found.paid) {
-                    statusResult.className = 'payment-status-result paid';
-                    statusResult.textContent = '✅ Congratulations! Your payment has been confirmed. You are officially registered!';
-                } else {
-                    statusResult.className = 'payment-status-result unpaid';
-                    statusResult.textContent = '⏳ Payment not yet confirmed. Please complete payment and send screenshot to +256709898420.';
-                }
-            }).catch(err => {
-                statusResult.className = 'payment-status-result not-found';
-                statusResult.textContent = '⚠️ Error checking status. Please try again.';
-                console.error(err);
-            });
-        }
+      const students = getStudents();
+      const newStudent = {
+        id: Date.now().toString(),
+        name,
+        school,
+        subjects,
+        paid: false,
+        registeredAt: new Date().toLocaleString()
+      };
+      students.push(newStudent);
+      saveStudents(students);
 
-        // ===== Registration =====
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const name = document.getElementById('studentName').value.trim();
-            const school = document.getElementById('studentSchool').value.trim();
-            const checkboxes = document.querySelectorAll('.checkbox-group input:checked');
-            const subjects = Array.from(checkboxes).map(cb => cb.value);
+      registerMessage.className = 'register-message success';
+      registerMessage.innerHTML =
+        '✅ Registration successful! <br>📱 Send payment to 0760463607 (Ali Sentongo) and screenshot to WhatsApp +256709898420.';
+      form.reset();
+      document.querySelectorAll('.checkbox-group input').forEach(cb => cb.checked = true);
+      setTimeout(() => {
+        registerMessage.className = 'register-message';
+        registerMessage.textContent = '';
+      }, 8000);
 
-            if (!name || !school) {
-                registerMessage.className = 'register-message error';
-                registerMessage.textContent = '⚠️ Please fill in both name and school.';
-                return;
-            }
+      renderStats();
+    });
 
-            if (subjects.length === 0) {
-                registerMessage.className = 'register-message error';
-                registerMessage.textContent = '⚠️ Please select at least one subject.';
-                return;
-            }
+    // ---------- Submit View ----------
+    submitViewBtn.addEventListener('click', () => {
+      const text = viewInput.value.trim();
+      if (!text) { alert('Please write something before posting.'); return; }
 
-            const newStudent = {
-                name,
-                school,
-                subjects,
-                paid: false,
-                registeredAt: new Date().toLocaleString()
-            };
+      const views = getViews();
+      views.push({
+        id: Date.now().toString(),
+        text: text,
+        timestamp: new Date().toLocaleString()
+      });
+      saveViews(views);
+      viewInput.value = '';
+      viewInput.focus();
+      renderViews();
+    });
 
-            push(studentsRef, newStudent)
-                .then(() => {
-                    registerMessage.className = 'register-message success';
-                    registerMessage.innerHTML =
-                        '✅ Registration successful! <br>📱 Send payment to 0760463607 (Ali Sentongo) and screenshot to WhatsApp +256709898420.';
-                    form.reset();
-                    document.querySelectorAll('.checkbox-group input').forEach(cb => cb.checked = true);
-                    setTimeout(() => {
-                        registerMessage.className = 'register-message';
-                        registerMessage.textContent = '';
-                    }, 8000);
-                })
-                .catch(err => {
-                    registerMessage.className = 'register-message error';
-                    registerMessage.textContent = '⚠️ Error: ' + err.message;
-                });
-        });
+    viewInput.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') { e.preventDefault();
+        submitViewBtn.click(); }
+    });
 
-        // ===== Submit View =====
-        submitViewBtn.addEventListener('click', () => {
-            const text = viewInput.value.trim();
-            if (!text) {
-                alert('Please write something before posting.');
-                return;
-            }
+    // ---------- Check Status ----------
+    checkStatusBtn.addEventListener('click', () => {
+      checkPaymentStatus(statusSearch.value.trim());
+    });
+    statusSearch.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') { e.preventDefault();
+        checkStatusBtn.click(); }
+    });
 
-            push(viewsRef, {
-                text: text,
-                timestamp: new Date().toLocaleString()
-            }).then(() => {
-                viewInput.value = '';
-                viewInput.focus();
-            }).catch(err => alert('Error posting view: ' + err.message));
-        });
+    // ---------- Init ----------
+    renderViews();
+    renderStats();
 
-        // Enter key for view input
-        viewInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                submitViewBtn.click();
-            }
-        });
-
-        // ===== Check Status Button =====
-        checkStatusBtn.addEventListener('click', () => {
-            const name = statusSearch.value.trim();
-            checkPaymentStatus(name);
-        });
-
-        statusSearch.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                checkStatusBtn.click();
-            }
-        });
-
-        // ===== Initialize =====
-        renderViews();
-        renderStats();
-
-        console.log('✅ PCAB Academy Student Portal loaded successfully!');
-        console.log('📱 Contact: +256709898420');
-        console.log('📧 Email: kasozihenry427@gmail.com');
-    </script>
+    console.log('✅ PCAB Academy Student Portal loaded successfully (Local Storage mode)');
+    console.log('📱 Contact: +256709898420');
+    console.log('📧 Email: kasozihenry427@gmail.com');
+    console.log('📦 Data stored in localStorage - works in sandboxed environments');
+  </script>
 
 </body>
 </html>
