@@ -10,6 +10,11 @@
   <meta name="description"
         content="PCAB Academy provides online academic support in Chemistry, Biology and Physics.">
 
+  <!-- Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
@@ -20,7 +25,9 @@
     :root {
       --dark: #07111f;
       --dark2: #0b1b2f;
+      --dark3: #0f2840;
       --blue: #1687ff;
+      --blue-light: #e9f2ff;
       --cyan: #20d9ff;
       --green: #16c784;
       --white: #ffffff;
@@ -28,6 +35,10 @@
       --card: #10243a;
       --danger: #ff5c67;
       --border: rgba(255,255,255,.10);
+      --shadow-sm: 0 8px 30px rgba(0,0,0,0.06);
+      --shadow-lg: 0 20px 50px rgba(0,0,0,0.12);
+      --radius: 20px;
+      --radius-sm: 12px;
     }
 
     html {
@@ -35,36 +46,33 @@
     }
 
     body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #f5f8fc;
-      color: #142033;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f8fe;
+      color: #0a1a2f;
       line-height: 1.6;
     }
 
-    button,
-    input,
-    select,
-    textarea {
+    button, input, select, textarea {
       font: inherit;
     }
 
-    /* NAVIGATION */
+    /* ---------- NAVIGATION ---------- */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 1000;
-      background: rgba(7,17,31,.90);
-      backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+      background: rgba(7,17,31,.88);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      transition: background 0.3s ease;
     }
 
     .nav-inner {
-      position: relative;
       max-width: 1200px;
       margin: auto;
-      padding: 15px 20px;
+      padding: 14px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -73,55 +81,109 @@
     .brand {
       color: white;
       text-decoration: none;
-      font-size: 21px;
+      font-size: 22px;
       font-weight: 800;
+      letter-spacing: -0.5px;
     }
 
     .brand span {
       color: var(--cyan);
+      background: linear-gradient(135deg, #20d9ff, #1687ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .nav-links {
       display: flex;
-      gap: 25px;
+      gap: 28px;
       list-style: none;
+      align-items: center;
     }
 
     .nav-links a {
       color: #dce9f6;
       text-decoration: none;
       font-size: 14px;
-      font-weight: 600;
+      font-weight: 500;
+      transition: color 0.2s ease;
+      position: relative;
     }
 
     .nav-links a:hover {
       color: var(--cyan);
     }
 
-    .nav-btn {
-      background: var(--blue);
-      color: white !important;
-      padding: 9px 15px;
-      border-radius: 8px;
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--cyan);
+      transition: width 0.3s ease;
     }
 
-    /* HERO */
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-btn {
+      background: linear-gradient(135deg, var(--blue), #0066e6);
+      color: white !important;
+      padding: 10px 22px;
+      border-radius: 40px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(22, 135, 255, 0.25);
+      transition: all 0.3s ease;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(22, 135, 255, 0.35);
+    }
+
+    .nav-btn::after {
+      display: none;
+    }
+
+    .nav-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: #dce9f6;
+      font-size: 28px;
+      cursor: pointer;
+      padding: 0 8px;
+    }
+
+    /* ---------- HERO ---------- */
     .hero {
-      min-height: 720px;
+      min-height: 780px;
       position: relative;
       overflow: hidden;
       background: var(--dark);
       color: white;
       display: flex;
       align-items: center;
-      padding: 120px 20px 70px;
+      padding: 130px 20px 80px;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 30%, rgba(22,135,255,0.08) 0%, transparent 60%),
+                  radial-gradient(circle at 20% 80%, rgba(32,217,255,0.06) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     .science-bg {
       position: absolute;
       inset: 0;
       overflow: hidden;
-      opacity: .42;
+      opacity: .35;
     }
 
     .science-bg::before {
@@ -129,100 +191,61 @@
       position: absolute;
       inset: -30%;
       background:
-        radial-gradient(circle at 20% 30%, rgba(32,217,255,.35), transparent 22%),
-        radial-gradient(circle at 80% 60%, rgba(22,135,255,.30), transparent 25%),
-        radial-gradient(circle at 50% 90%, rgba(22,199,132,.20), transparent 20%);
-      animation: moveBg 12s infinite alternate ease-in-out;
+        radial-gradient(circle at 20% 30%, rgba(32,217,255,.30), transparent 22%),
+        radial-gradient(circle at 80% 60%, rgba(22,135,255,.25), transparent 25%),
+        radial-gradient(circle at 50% 90%, rgba(22,199,132,.18), transparent 20%);
+      animation: moveBg 16s infinite alternate ease-in-out;
     }
 
     @keyframes moveBg {
-      from {
-        transform: translate(-4%, -2%) scale(1);
-      }
-      to {
-        transform: translate(4%, 3%) scale(1.15);
-      }
+      from { transform: translate(-4%, -2%) scale(1); }
+      to { transform: translate(4%, 3%) scale(1.15); }
     }
 
     .equations {
       position: absolute;
       inset: 0;
-      font-family: Georgia, serif;
-      color: rgba(255,255,255,.20);
-      font-size: clamp(20px, 3vw, 42px);
+      font-family: 'Georgia', serif;
+      color: rgba(255,255,255,.12);
+      font-size: clamp(18px, 2.8vw, 40px);
+      font-weight: 300;
     }
 
     .equations span {
       position: absolute;
-      animation: floatEquation 14s infinite linear;
+      animation: floatEquation 16s infinite linear;
+      letter-spacing: 1px;
     }
 
-    .equations span:nth-child(1) {
-      top: 15%;
-      left: 5%;
-    }
-
-    .equations span:nth-child(2) {
-      top: 30%;
-      left: 65%;
-      animation-delay: 2s;
-    }
-
-    .equations span:nth-child(3) {
-      top: 70%;
-      left: 20%;
-      animation-delay: 4s;
-    }
-
-    .equations span:nth-child(4) {
-      top: 80%;
-      left: 72%;
-      animation-delay: 6s;
-    }
-
-    .equations span:nth-child(5) {
-      top: 48%;
-      left: 40%;
-      animation-delay: 8s;
-    }
+    .equations span:nth-child(1) { top: 12%; left: 4%; }
+    .equations span:nth-child(2) { top: 28%; left: 68%; animation-delay: 2s; }
+    .equations span:nth-child(3) { top: 72%; left: 15%; animation-delay: 4s; }
+    .equations span:nth-child(4) { top: 82%; left: 74%; animation-delay: 6s; }
+    .equations span:nth-child(5) { top: 45%; left: 42%; animation-delay: 8s; }
 
     @keyframes floatEquation {
-      0% {
-        transform: translateY(30px) rotate(-3deg);
-        opacity: .05;
-      }
-
-      50% {
-        opacity: .35;
-      }
-
-      100% {
-        transform: translateY(-50px) rotate(3deg);
-        opacity: .05;
-      }
+      0% { transform: translateY(30px) rotate(-3deg); opacity: .05; }
+      50% { opacity: .25; }
+      100% { transform: translateY(-50px) rotate(3deg); opacity: .05; }
     }
 
     .dna {
       position: absolute;
-      right: 8%;
-      top: 18%;
-      width: 110px;
-      height: 400px;
-      opacity: .15;
-      border-left: 5px solid var(--cyan);
-      border-right: 5px solid var(--green);
+      right: 6%;
+      top: 20%;
+      width: 100px;
+      height: 350px;
+      opacity: .12;
+      border-left: 4px solid var(--cyan);
+      border-right: 4px solid var(--green);
       border-radius: 50%;
-      transform: rotate(12deg);
-      animation: dnaMove 8s infinite alternate ease-in-out;
+      transform: rotate(15deg);
+      animation: dnaMove 10s infinite alternate ease-in-out;
     }
 
     @keyframes dnaMove {
-      from {
-        transform: rotate(12deg) translateY(0);
-      }
-      to {
-        transform: rotate(-12deg) translateY(25px);
-      }
+      from { transform: rotate(15deg) translateY(0); }
+      to { transform: rotate(-15deg) translateY(30px); }
     }
 
     .hero-content {
@@ -235,37 +258,46 @@
 
     .hero-badge {
       display: inline-block;
-      background: rgba(32,217,255,.12);
-      border: 1px solid rgba(32,217,255,.35);
+      background: rgba(32,217,255,.10);
+      border: 1px solid rgba(32,217,255,.25);
       color: var(--cyan);
-      padding: 7px 13px;
-      border-radius: 30px;
-      margin-bottom: 20px;
-      font-size: 13px;
-      font-weight: bold;
+      padding: 8px 18px;
+      border-radius: 40px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
     .hero h1 {
-      font-size: clamp(42px, 7vw, 78px);
+      font-size: clamp(44px, 8vw, 82px);
       max-width: 850px;
-      line-height: 1.02;
-      margin-bottom: 22px;
+      line-height: 1.04;
+      margin-bottom: 24px;
+      font-weight: 800;
+      letter-spacing: -2px;
     }
 
     .hero h1 span {
-      color: var(--cyan);
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero p {
-      max-width: 680px;
+      max-width: 600px;
       color: #c5d3e2;
       font-size: 18px;
-      margin-bottom: 30px;
+      margin-bottom: 36px;
+      font-weight: 400;
+      line-height: 1.7;
     }
 
     .hero-actions {
       display: flex;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
     }
 
@@ -273,60 +305,84 @@
       border: none;
       cursor: pointer;
       text-decoration: none;
-      padding: 13px 20px;
-      border-radius: 9px;
-      font-weight: bold;
+      padding: 14px 28px;
+      border-radius: 40px;
+      font-weight: 600;
       display: inline-block;
-      transition: .2s;
+      transition: all 0.3s ease;
+      font-size: 15px;
     }
 
     .btn:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
 
     .btn-primary {
-      background: var(--blue);
+      background: linear-gradient(135deg, var(--blue), #0066e6);
       color: white;
+      box-shadow: 0 6px 18px rgba(22, 135, 255, 0.30);
+    }
+
+    .btn-primary:hover {
+      box-shadow: 0 10px 28px rgba(22, 135, 255, 0.40);
     }
 
     .btn-secondary {
-      background: rgba(255,255,255,.09);
-      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
       color: white;
+      backdrop-filter: blur(4px);
     }
 
-    /* STATS */
+    .btn-secondary:hover {
+      background: rgba(255,255,255,.14);
+    }
+
+    /* ---------- STATS ---------- */
     .stats {
       max-width: 1100px;
-      margin: -45px auto 60px;
+      margin: -48px auto 60px;
       position: relative;
       z-index: 5;
       display: grid;
       grid-template-columns: repeat(3,1fr);
-      gap: 15px;
+      gap: 18px;
       padding: 0 20px;
     }
 
     .stat {
       background: white;
-      border-radius: 14px;
-      padding: 25px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.10);
+      border-radius: var(--radius);
+      padding: 28px 20px;
+      box-shadow: var(--shadow-sm);
       text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(0,0,0,0.02);
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
     }
 
     .stat strong {
       display: block;
-      font-size: 30px;
-      color: var(--blue);
+      font-size: 34px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--blue), var(--cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .stat span {
       color: #65748a;
       font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
     }
 
-    /* SECTIONS */
+    /* ---------- SECTIONS ---------- */
     section {
       padding: 80px 20px;
     }
@@ -338,27 +394,37 @@
 
     .section-title {
       text-align: center;
-      margin-bottom: 45px;
+      margin-bottom: 50px;
     }
 
     .section-title small {
+      display: inline-block;
+      background: var(--blue-light);
       color: var(--blue);
-      font-weight: bold;
+      font-weight: 700;
       text-transform: uppercase;
+      font-size: 11px;
+      letter-spacing: 2px;
+      padding: 6px 16px;
+      border-radius: 40px;
     }
 
     .section-title h2 {
-      font-size: clamp(30px,5vw,45px);
-      margin-top: 8px;
+      font-size: clamp(30px,5vw,44px);
+      margin-top: 14px;
+      font-weight: 800;
+      letter-spacing: -1px;
+      color: #0a1a2f;
     }
 
     .section-title p {
       max-width: 650px;
-      margin: 10px auto;
+      margin: 12px auto 0;
       color: #68788d;
+      font-size: 17px;
     }
 
-    /* SUBJECTS */
+    /* ---------- SUBJECTS ---------- */
     .subjects {
       background: white;
     }
@@ -366,142 +432,208 @@
     .subject-grid {
       display: grid;
       grid-template-columns: repeat(3,1fr);
-      gap: 20px;
+      gap: 24px;
     }
 
     .subject-card {
-      padding: 30px;
-      border: 1px solid #e5ebf2;
-      border-radius: 16px;
-      background: #fff;
-      transition: .25s;
+      padding: 36px 28px;
+      border-radius: var(--radius);
+      background: #fafcff;
+      border: 1px solid #eef3f9;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .subject-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
     .subject-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 15px 35px rgba(0,0,0,.08);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-lg);
+      border-color: transparent;
+    }
+
+    .subject-card:hover::before {
+      opacity: 1;
     }
 
     .subject-icon {
-      width: 55px;
-      height: 55px;
-      border-radius: 14px;
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
       display: grid;
       place-items: center;
-      background: #edf7ff;
-      font-size: 25px;
-      margin-bottom: 18px;
+      background: linear-gradient(135deg, #e9f2ff, #d6e8ff);
+      font-size: 28px;
+      margin-bottom: 20px;
+      transition: transform 0.3s ease;
+    }
+
+    .subject-card:hover .subject-icon {
+      transform: scale(1.05);
     }
 
     .subject-card h3 {
-      margin-bottom: 8px;
+      margin-bottom: 10px;
+      font-size: 20px;
+      font-weight: 700;
     }
 
     .subject-card p {
       color: #6c7c8e;
       font-size: 14px;
+      line-height: 1.7;
     }
 
-    /* REGISTRATION */
+    /* ---------- REGISTRATION ---------- */
     .registration {
-      background: #eef5fb;
+      background: linear-gradient(180deg, #f4f8fe 0%, #e9f2ff 100%);
     }
 
     .form-card {
       max-width: 720px;
       margin: auto;
       background: white;
-      padding: 35px;
-      border-radius: 18px;
-      box-shadow: 0 15px 50px rgba(0,0,0,.08);
+      padding: 40px 42px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(255,255,255,0.5);
     }
 
     .form-group {
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
     .form-group label {
       display: block;
-      font-weight: bold;
-      margin-bottom: 7px;
+      font-weight: 600;
+      margin-bottom: 8px;
       font-size: 14px;
+      color: #1a2a3f;
     }
 
     .form-group input,
     .form-group select,
     .form-group textarea {
       width: 100%;
-      padding: 13px;
-      border: 1px solid #d9e2eb;
-      border-radius: 9px;
+      padding: 14px 16px;
+      border: 2px solid #e8edf4;
+      border-radius: var(--radius-sm);
       outline: none;
+      transition: all 0.25s ease;
+      background: #fafcff;
+      font-size: 15px;
     }
 
     .form-group input:focus,
     .form-group select:focus,
     .form-group textarea:focus {
       border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(22, 135, 255, 0.10);
+      background: white;
     }
 
     .subjects-select {
       display: grid;
       grid-template-columns: repeat(3,1fr);
-      gap: 10px;
+      gap: 12px;
     }
 
     .subject-option {
-      border: 1px solid #dce5ed;
-      padding: 13px;
-      border-radius: 9px;
+      border: 2px solid #e8edf4;
+      padding: 14px 10px;
+      border-radius: var(--radius-sm);
       cursor: pointer;
       text-align: center;
+      transition: all 0.25s ease;
+      background: #fafcff;
+      font-weight: 500;
+    }
+
+    .subject-option:hover {
+      border-color: var(--blue);
+      background: var(--blue-light);
     }
 
     .subject-option input {
       width: auto;
-      margin-right: 5px;
+      margin-right: 6px;
+      accent-color: var(--blue);
     }
 
     .payment-box {
-      background: #fff8df;
+      background: linear-gradient(135deg, #fffbf0, #fff7e0);
       border: 1px solid #f2d878;
-      border-radius: 12px;
-      padding: 18px;
-      margin: 20px 0;
+      border-radius: var(--radius-sm);
+      padding: 22px 24px;
+      margin: 24px 0 28px;
     }
 
     .payment-box strong {
-      color: #775b00;
+      color: #7a5d00;
+      font-size: 16px;
     }
 
     .payment-number {
-      font-size: 24px;
-      font-weight: 900;
-      margin: 5px 0;
+      font-size: 28px;
+      font-weight: 800;
+      margin: 6px 0 4px;
+      letter-spacing: 1px;
+      color: #0a1a2f;
     }
 
-    .success-box,
-    .error-box {
+    .payment-box small {
+      color: #8a7a4a;
+      font-size: 13px;
+    }
+
+    .success-box, .error-box {
       display: none;
-      padding: 15px;
-      border-radius: 10px;
-      margin-bottom: 15px;
+      padding: 16px 20px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 18px;
+      font-weight: 500;
     }
 
     .success-box {
       background: #e5faf2;
       color: #087a50;
+      border-left: 4px solid var(--green);
     }
 
     .error-box {
       background: #ffebed;
       color: #b4232d;
+      border-left: 4px solid var(--danger);
     }
 
-    /* STATUS */
+    /* ---------- STATUS ---------- */
     .status-section {
       background: var(--dark);
       color: white;
+    }
+
+    .status-section .section-title small {
+      background: rgba(32,217,255,0.15);
+      color: var(--cyan);
+    }
+
+    .status-section .section-title h2 {
+      color: white;
+    }
+
+    .status-section .section-title p {
+      color: #aebed0;
     }
 
     .status-card {
@@ -509,48 +641,69 @@
       margin: auto;
       background: var(--dark2);
       border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 17px;
+      padding: 36px;
+      border-radius: var(--radius);
+      backdrop-filter: blur(4px);
     }
 
     .status-card input {
       width: 100%;
-      padding: 14px;
-      border-radius: 9px;
-      border: none;
-      margin-bottom: 12px;
+      padding: 16px 18px;
+      border-radius: var(--radius-sm);
+      border: 2px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.3s ease;
+    }
+
+    .status-card input:focus {
+      border-color: var(--cyan);
+    }
+
+    .status-card input::placeholder {
+      color: #6a7f98;
     }
 
     .status-result {
-      margin-top: 20px;
+      margin-top: 24px;
       display: none;
-      padding: 20px;
-      border-radius: 12px;
-      background: rgba(255,255,255,.06);
+      padding: 24px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.06);
     }
 
     .paid {
       color: #28db9b;
-      font-weight: bold;
+      font-weight: 700;
     }
 
     .unpaid {
       color: #ffbd3e;
-      font-weight: bold;
+      font-weight: 700;
     }
 
-    /* LESSONS */
+    /* ---------- LESSONS ---------- */
     .lesson-grid {
       display: grid;
       grid-template-columns: repeat(2,1fr);
-      gap: 22px;
+      gap: 28px;
     }
 
     .lesson {
       background: white;
-      border-radius: 15px;
+      border-radius: var(--radius);
       overflow: hidden;
-      border: 1px solid #e1e8ef;
+      border: 1px solid #e8edf4;
+      transition: all 0.35s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .lesson:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
     }
 
     .lesson iframe {
@@ -561,59 +714,73 @@
     }
 
     .lesson-content {
-      padding: 17px;
+      padding: 20px 24px 24px;
     }
 
     .lesson-content h3 {
-      font-size: 17px;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
     }
 
     .lesson-content p {
       color: #728094;
-      font-size: 13px;
+      font-size: 14px;
     }
 
-    /* REVIEWS */
+    /* ---------- REVIEWS ---------- */
     .reviews {
-      background: #eef5fb;
+      background: linear-gradient(180deg, #f4f8fe, #ffffff);
     }
 
     .review-form {
       max-width: 650px;
-      margin: 0 auto 40px;
+      margin: 0 auto 44px;
       background: white;
-      padding: 25px;
-      border-radius: 15px;
+      padding: 32px;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      border: 1px solid #eef3f9;
     }
 
     .review-list {
       display: grid;
       grid-template-columns: repeat(3,1fr);
-      gap: 18px;
+      gap: 20px;
     }
 
     .review {
       background: white;
-      padding: 20px;
-      border-radius: 13px;
-      border: 1px solid #e1e8ef;
+      padding: 24px;
+      border-radius: var(--radius-sm);
+      border: 1px solid #eef3f9;
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .review:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
     }
 
     .review strong {
       display: block;
-      margin-bottom: 7px;
+      margin-bottom: 8px;
+      font-size: 16px;
+      color: #0a1a2f;
     }
 
     .review p {
-      color: #68788d;
+      color: #5a6f84;
       font-size: 14px;
+      line-height: 1.6;
     }
 
-    /* FOOTER */
+    /* ---------- FOOTER ---------- */
     footer {
       background: #050d17;
       color: white;
-      padding: 55px 20px 25px;
+      padding: 60px 20px 30px;
     }
 
     .footer-grid {
@@ -621,18 +788,22 @@
       margin: auto;
       display: grid;
       grid-template-columns: 2fr 1fr 1fr;
-      gap: 40px;
+      gap: 48px;
     }
 
-    footer h3,
-    footer h4 {
-      margin-bottom: 12px;
+    footer h3, footer h4 {
+      margin-bottom: 16px;
+      font-weight: 700;
     }
 
-    footer p,
-    footer li {
+    footer h3 {
+      font-size: 22px;
+    }
+
+    footer p, footer li {
       color: #9eafc1;
       font-size: 14px;
+      line-height: 1.8;
     }
 
     footer ul {
@@ -640,26 +811,38 @@
     }
 
     footer li {
-      margin: 7px 0;
+      margin: 8px 0;
+    }
+
+    footer a {
+      color: #9eafc1;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    footer a:hover {
+      color: var(--cyan);
     }
 
     .copyright {
       max-width: 1100px;
-      margin: 40px auto 0;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,.08);
+      margin: 44px auto 0;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.06);
       color: #718399;
       font-size: 13px;
+      text-align: center;
     }
 
-    /* Registration modal */
+    /* ---------- MODAL ---------- */
     .modal {
       position: fixed;
       inset: 0;
       display: none;
       align-items: center;
       justify-content: center;
-      background: rgba(0,0,0,.45);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(8px);
       z-index: 2000;
       padding: 20px;
     }
@@ -672,57 +855,86 @@
       background: white;
       max-width: 420px;
       width: 100%;
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 18px 50px rgba(15,34,56,.28);
+      border-radius: var(--radius);
+      padding: 32px 30px 28px;
+      box-shadow: var(--shadow-lg);
       text-align: center;
+      animation: modalIn 0.3s ease;
+    }
+
+    @keyframes modalIn {
+      from { transform: scale(0.92) translateY(20px); opacity: 0; }
+      to { transform: scale(1) translateY(0); opacity: 1; }
     }
 
     .modal-card h3 {
       margin-bottom: 8px;
-      color: #142033;
+      color: #0a1a2f;
+      font-weight: 800;
+      font-size: 24px;
+    }
+
+    .modal-card .sub {
+      color: #5a6f84;
+      font-size: 14px;
+      margin-bottom: 12px;
     }
 
     .reg-id {
       display: inline-block;
-      background: #f3f8ff;
-      border: 1px solid #e1eefb;
-      padding: 12px 18px;
-      border-radius: 10px;
+      background: var(--blue-light);
+      border: 2px solid #d6e8ff;
+      padding: 14px 24px;
+      border-radius: var(--radius-sm);
       font-weight: 800;
-      margin: 12px 0 18px;
+      font-size: 20px;
+      margin: 16px 0 24px;
+      letter-spacing: 1px;
+      color: var(--blue);
     }
 
     .modal-actions {
       display: flex;
-      gap: 10px;
+      gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
     }
 
-    @media(max-width:800px) {
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:900px) {
+      .stats,
+      .subject-grid,
+      .review-list,
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .lesson-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(max-width:768px) {
       .nav-toggle {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        background: transparent;
-        border: none;
-        color: #dce9f6;
-        font-size: 24px;
-        cursor: pointer;
       }
 
       .nav-links {
         display: none;
         position: absolute;
-        top: 62px;
+        top: 70px;
         right: 20px;
-        background: rgba(7,17,31,.95);
-        padding: 12px;
-        border-radius: 12px;
+        background: rgba(7,17,31,.96);
+        padding: 18px 20px;
+        border-radius: var(--radius-sm);
         flex-direction: column;
-        gap: 10px;
-        min-width: 160px;
+        gap: 14px;
+        min-width: 190px;
+        backdrop-filter: blur(18px);
+        border: 1px solid rgba(255,255,255,.06);
+        box-shadow: var(--shadow-lg);
       }
 
       .nav-links.open {
@@ -736,16 +948,35 @@
         grid-template-columns: 1fr;
       }
 
-      .lesson-grid {
-        grid-template-columns: 1fr;
+      .subjects-select {
+        grid-template-columns: 1fr 1fr;
       }
 
+      .hero {
+        min-height: 680px;
+        padding: 110px 20px 60px;
+      }
+
+      .form-card {
+        padding: 28px 20px;
+      }
+
+      .status-card {
+        padding: 24px 20px;
+      }
+
+      .dna {
+        display: none;
+      }
+    }
+
+    @media(max-width:480px) {
       .subjects-select {
         grid-template-columns: 1fr;
       }
 
-      .hero {
-        min-height: 650px;
+      .hero h1 {
+        font-size: 34px;
       }
     }
   </style>
@@ -778,472 +1009,275 @@
       <span>PV = nRT</span>
       <span>F = ma</span>
       <span>DNA → RNA → Protein</span>
-      <span>ΔH = Hproducts − Hreactants</span>
+      <span>ΔH = H<sub>products</sub> − H<sub>reactants</sub></span>
     </div>
-
     <div class="dna"></div>
   </div>
 
   <div class="hero-content">
-
-    <div class="hero-badge">
-      ONLINE LEARNING • CHEMISTRY • BIOLOGY • PHYSICS
-    </div>
-
+    <div class="hero-badge">Online Learning • Chemistry • Biology • Physics</div>
     <h1>
       Learn science.<br>
       <span>Understand it. Pass it.</span>
     </h1>
-
     <p>
       Welcome to PCAB Academy — Pass Chemistry and Biology.
       A modern academic learning platform helping students understand
       Chemistry, Biology and Physics through clear explanations,
       examination support and flexible online learning.
     </p>
-
     <div class="hero-actions">
-      <a href="#register" class="btn btn-primary">
-        Register Now
-      </a>
-
-      <a href="#lessons" class="btn btn-secondary">
-        Explore Lessons
-      </a>
+      <a href="#register" class="btn btn-primary">Register Now</a>
+      <a href="#lessons" class="btn btn-secondary">Explore Lessons</a>
     </div>
-
   </div>
 </header>
 
 <!-- STATS -->
 <div class="stats">
-
   <div class="stat">
     <strong id="totalStudents">0</strong>
     <span>Registered Students</span>
   </div>
-
   <div class="stat">
     <strong id="paidStudents">0</strong>
     <span>Confirmed Payments</span>
   </div>
-
   <div class="stat">
     <strong id="subjectCount">3</strong>
     <span>Science Subjects</span>
   </div>
-
 </div>
 
 <!-- SUBJECTS -->
 <section id="subjects" class="subjects">
-
   <div class="container">
-
     <div class="section-title">
       <small>What you can study</small>
       <h2>Science Made Understandable</h2>
-      <p>
-        Build strong foundations, understand difficult concepts
-        and prepare confidently for examinations.
-      </p>
+      <p>Build strong foundations, understand difficult concepts and prepare confidently for examinations.</p>
     </div>
-
     <div class="subject-grid">
-
       <div class="subject-card">
         <div class="subject-icon">⚗️</div>
         <h3>Chemistry</h3>
-        <p>
-          From General Chemistry to Organic Chemistry,
-          reactions, calculations, equations and examination
-          problem solving.
-        </p>
+        <p>From General Chemistry to Organic Chemistry, reactions, calculations, equations and examination problem solving.</p>
       </div>
-
       <div class="subject-card">
         <div class="subject-icon">🧬</div>
         <h3>Biology</h3>
-        <p>
-          Explore cells, genetics, physiology, ecology,
-          reproduction and other important biological concepts.
-        </p>
+        <p>Explore cells, genetics, physiology, ecology, reproduction and other important biological concepts.</p>
       </div>
-
       <div class="subject-card">
         <div class="subject-icon">⚡</div>
         <h3>Physics</h3>
-        <p>
-          Understand forces, motion, electricity, waves,
-          energy, measurements and mathematical problem solving.
-        </p>
+        <p>Understand forces, motion, electricity, waves, energy, measurements and mathematical problem solving.</p>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
 <!-- REGISTRATION -->
 <section id="register" class="registration">
-
   <div class="container">
-
     <div class="section-title">
       <small>Join PCAB Academy</small>
       <h2>PCAB ACADEMY REGISTRATION</h2>
-      <p>
-        Complete the form below and follow the payment instructions.
-      </p>
+      <p>Complete the form below and follow the payment instructions.</p>
     </div>
 
     <div class="form-card">
-
       <div id="registrationSuccess" class="success-box"></div>
       <div id="registrationError" class="error-box"></div>
 
       <form id="registrationForm">
-
         <div class="form-group">
           <label>Full Name</label>
-          <input
-            id="studentName"
-            type="text"
-            placeholder="Enter your full name"
-            required>
+          <input id="studentName" type="text" placeholder="Enter your full name" required>
         </div>
 
         <div class="form-group">
           <label>School</label>
-          <input
-            id="school"
-            type="text"
-            placeholder="Enter your school"
-            required>
+          <input id="school" type="text" placeholder="Enter your school" required>
         </div>
 
         <div class="form-group">
           <label>Select Subject(s)</label>
-
           <div class="subjects-select">
-
             <label class="subject-option">
-              <input
-                type="checkbox"
-                name="subject"
-                value="Chemistry">
-              Chemistry
+              <input type="checkbox" name="subject" value="Chemistry"> Chemistry
             </label>
-
             <label class="subject-option">
-              <input
-                type="checkbox"
-                name="subject"
-                value="Biology">
-              Biology
+              <input type="checkbox" name="subject" value="Biology"> Biology
             </label>
-
             <label class="subject-option">
-              <input
-                type="checkbox"
-                name="subject"
-                value="Physics">
-              Physics
+              <input type="checkbox" name="subject" value="Physics"> Physics
             </label>
-
           </div>
-
         </div>
 
         <div class="payment-box">
-
           <strong>PCAB ACADEMY 🚨 PAYMENT</strong>
-
-          <p>
-            Simply send the fee on the PCAB Administration number:
-          </p>
-
-          <div class="payment-number">
-            0760463607
-          </div>
-
-          <p>
-            <strong>Name: Ali Sentongo</strong>
-          </p>
-
-          <p>
-            Ensure to send an immediate message or screenshot to prove
-            payment since different scholars pay daily 〽️〽️.
-          </p>
-
+          <p>Simply send the fee on the PCAB Administration number:</p>
+          <div class="payment-number">0760463607</div>
+          <p><strong>Name: Ali Sentongo</strong></p>
+          <p>Ensure to send an immediate message or screenshot to prove payment since different scholars pay daily 〽️〽️.</p>
           <br>
-
-          <small>
-            Payment is NOT made through this website.
-            After registering, use Mobile Money to make your payment.
-          </small>
-
+          <small>Payment is NOT made through this website. After registering, use Mobile Money to make your payment.</small>
         </div>
 
-        <button class="btn btn-primary" type="submit" style="width:100%;">
-          Complete Registration
-        </button>
-
+        <button class="btn btn-primary" type="submit" style="width:100%;">Complete Registration</button>
       </form>
-
     </div>
-
   </div>
-
 </section>
 
 <!-- STATUS -->
 <section id="status" class="status-section">
-
   <div class="container">
-
     <div class="section-title">
-      <small style="color:#20d9ff;">Check your account</small>
-
-      <h2>
-        Payment Confirmation
-      </h2>
-
-      <p style="color:#aebed0;">
-        Enter the registration ID you received after registering.
-      </p>
+      <small>Check your account</small>
+      <h2>Payment Confirmation</h2>
+      <p>Enter the registration ID you received after registering.</p>
     </div>
 
     <div class="status-card">
-
-      <input
-        id="statusId"
-        placeholder="Example: PCAB-ABC123">
-
-      <button
-        class="btn btn-primary"
-        id="checkStatus"
-        style="width:100%;">
-        Check Status
-      </button>
-
+      <input id="statusId" placeholder="Example: PCAB-ABC123">
+      <button class="btn btn-primary" id="checkStatus" style="width:100%;">Check Status</button>
       <div id="statusResult" class="status-result"></div>
-
     </div>
-
   </div>
-
 </section>
 
 <!-- LESSONS -->
 <section id="lessons">
-
   <div class="container">
-
     <div class="section-title">
       <small>Learn online</small>
       <h2>Explore PCAB Lessons</h2>
-
-      <p>
-        Learn at your own pace and revisit difficult concepts
-        whenever you need them.
-      </p>
+      <p>Learn at your own pace and revisit difficult concepts whenever you need them.</p>
     </div>
 
     <div class="lesson-grid">
-
       <div class="lesson">
-        <iframe
-          src="https://www.youtube.com/embed/w6jph5wMpws"
-          title="PCAB Chemistry lesson"
-          allowfullscreen>
-        </iframe>
-
+        <iframe src="https://www.youtube.com/embed/w6jph5wMpws" title="PCAB Chemistry lesson" allowfullscreen></iframe>
         <div class="lesson-content">
           <h3>Chemistry Lesson</h3>
           <p>Explore Chemistry concepts with PCAB Academy.</p>
         </div>
       </div>
-
       <div class="lesson">
-        <iframe
-          src="https://www.youtube.com/embed/p1blG4zg_Bc"
-          title="PCAB Chemistry lesson"
-          allowfullscreen>
-        </iframe>
-
+        <iframe src="https://www.youtube.com/embed/p1blG4zg_Bc" title="PCAB Chemistry lesson" allowfullscreen></iframe>
         <div class="lesson-content">
           <h3>Chemistry Learning</h3>
           <p>Build your understanding step by step.</p>
         </div>
       </div>
-
       <div class="lesson">
-        <iframe
-          src="https://www.youtube.com/embed/B1UX1l4Aj78"
-          title="PCAB Biology lesson"
-          allowfullscreen>
-        </iframe>
-
+        <iframe src="https://www.youtube.com/embed/B1UX1l4Aj78" title="PCAB Biology lesson" allowfullscreen></iframe>
         <div class="lesson-content">
           <h3>Biology Learning</h3>
           <p>Explore important biological concepts.</p>
         </div>
       </div>
-
       <div class="lesson">
-        <iframe
-          src="https://www.youtube.com/embed/998pghbXKGE"
-          title="PCAB Academy lesson"
-          allowfullscreen>
-        </iframe>
-
+        <iframe src="https://www.youtube.com/embed/998pghbXKGE" title="PCAB Academy lesson" allowfullscreen></iframe>
         <div class="lesson-content">
           <h3>Exam Preparation</h3>
           <p>Strengthen your understanding for examinations.</p>
         </div>
       </div>
-
       <div class="lesson">
-        <iframe
-          src="https://www.youtube.com/embed/nWRO5WA3hRM"
-          title="PCAB Academy lesson"
-          allowfullscreen>
-        </iframe>
-
+        <iframe src="https://www.youtube.com/embed/nWRO5WA3hRM" title="PCAB Academy lesson" allowfullscreen></iframe>
         <div class="lesson-content">
           <h3>Science Explained</h3>
           <p>Review challenging science topics.</p>
         </div>
       </div>
-
       <div class="lesson">
-        <iframe
-          src="https://www.youtube.com/embed/scEswyD-S-Y"
-          title="PCAB Academy lesson"
-          allowfullscreen>
-        </iframe>
-
+        <iframe src="https://www.youtube.com/embed/scEswyD-S-Y" title="PCAB Academy lesson" allowfullscreen></iframe>
         <div class="lesson-content">
           <h3>PCAB Chemistry Beast</h3>
           <p>More learning from the PCAB Academy channel.</p>
         </div>
       </div>
-
     </div>
-
   </div>
-
 </section>
 
 <!-- REVIEWS -->
 <section id="reviews" class="reviews">
-
   <div class="container">
-
     <div class="section-title">
       <small>Student voices</small>
       <h2>What Students Say</h2>
-
-      <p>
-        Share your experience with PCAB Academy.
-      </p>
+      <p>Share your experience with PCAB Academy.</p>
     </div>
 
     <div class="review-form">
-
       <form id="reviewForm">
-
         <div class="form-group">
           <label>Your Name</label>
-
-          <input
-            id="reviewName"
-            type="text"
-            placeholder="Your name"
-            required>
+          <input id="reviewName" type="text" placeholder="Your name" required>
         </div>
-
         <div class="form-group">
           <label>Your View</label>
-
-          <textarea
-            id="reviewText"
-            rows="4"
-            placeholder="Tell us about your experience..."
-            required></textarea>
+          <textarea id="reviewText" rows="4" placeholder="Tell us about your experience..." required></textarea>
         </div>
-
-        <button class="btn btn-primary" type="submit">
-          Share My View
-        </button>
-
+        <button class="btn btn-primary" type="submit">Share My View</button>
       </form>
-
     </div>
 
     <div id="reviewList" class="review-list"></div>
-
   </div>
-
 </section>
 
 <!-- FOOTER -->
 <footer>
-
   <div class="footer-grid">
-
     <div>
       <h3>PCAB ACADEMY</h3>
-
-      <p>
-        Pass Chemistry and Biology — now providing academic
-        learning support in Chemistry, Biology and Physics.
-      </p>
-
+      <p>Pass Chemistry and Biology — now providing academic learning support in Chemistry, Biology and Physics.</p>
       <br>
-
-      <p>
-        Simplifying complex topics, supporting examinations
-        and helping students learn at their own pace.
-      </p>
+      <p>Simplifying complex topics, supporting examinations and helping students learn at their own pace.</p>
     </div>
-
     <div>
       <h4>Contact</h4>
-
       <ul>
         <li>WhatsApp: +256 709 898420</li>
         <li>Email: kasozihenry427@gmail.com</li>
         <li>Payment: 0760463607</li>
       </ul>
     </div>
-
     <div>
       <h4>Explore</h4>
-
       <ul>
-        <li><a href="#subjects" style="color:#9eafc1;">Subjects</a></li>
-        <li><a href="#lessons" style="color:#9eafc1;">Lessons</a></li>
-        <li><a href="#register" style="color:#9eafc1;">Register</a></li>
-        <li><a href="#status" style="color:#9eafc1;">Payment Status</a></li>
+        <li><a href="#subjects">Subjects</a></li>
+        <li><a href="#lessons">Lessons</a></li>
+        <li><a href="#register">Register</a></li>
+        <li><a href="#status">Payment Status</a></li>
       </ul>
     </div>
-
   </div>
-
-  <div class="copyright">
-    © 2026 PCAB Academy. Pass Chemistry and Biology.
-  </div>
-
+  <div class="copyright">© 2026 PCAB Academy. Pass Chemistry and Biology.</div>
 </footer>
 
+<!-- MODAL -->
+<div id="regModal" class="modal" role="dialog" aria-modal="true">
+  <div class="modal-card">
+    <h3>🎉 Registration Successful</h3>
+    <div class="sub">Save this Registration ID — you'll need it to check payment status.</div>
+    <div id="regIdValue" class="reg-id">PCAB-XXXXXX</div>
+    <div class="modal-actions">
+      <button id="copyReg" class="btn btn-primary">Copy ID</button>
+      <button id="closeReg" class="btn btn-secondary">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE + APP LOGIC (unchanged capability) -->
 <script type="module">
-
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
   import {
     getFirestore,
     collection,
@@ -1253,11 +1287,8 @@
     where,
     orderBy,
     limit,
-    serverTimestamp,
-    doc,
-    getDoc
-  }
-  from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+    serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyDeHZKyzStirFrLLRVuxLaNMZ9QeLjkfCc",
@@ -1272,377 +1303,164 @@
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  /* ---------------------------
-     HELPERS
-  --------------------------- */
-
   function makeRegistrationId() {
-
-    const characters =
-      "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-
+    const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
     let result = "";
-
     for (let i = 0; i < 6; i++) {
-      result += characters[
-        Math.floor(Math.random() * characters.length)
-      ];
+      result += chars[Math.floor(Math.random() * chars.length)];
     }
-
     return "PCAB-" + result;
   }
 
   function showBox(id, message) {
-
-    const element = document.getElementById(id);
-
-    element.textContent = message;
-    element.style.display = "block";
+    const el = document.getElementById(id);
+    el.textContent = message;
+    el.style.display = "block";
   }
 
-  /* ---------------------------
-     REGISTRATION
-  --------------------------- */
+  // Registration
+  document.getElementById("registrationForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("studentName").value.trim();
+    const school = document.getElementById("school").value.trim();
+    const subjects = [...document.querySelectorAll('input[name="subject"]:checked')].map(i => i.value);
 
-  document
-    .getElementById("registrationForm")
-    .addEventListener("submit", async (event) => {
+    document.getElementById("registrationSuccess").style.display = "none";
+    document.getElementById("registrationError").style.display = "none";
 
-      event.preventDefault();
-
-      const name =
-        document.getElementById("studentName").value.trim();
-
-      const school =
-        document.getElementById("school").value.trim();
-
-      const subjects =
-        [...document.querySelectorAll(
-          'input[name="subject"]:checked'
-        )].map(input => input.value);
-
-      document.getElementById(
-        "registrationSuccess"
-      ).style.display = "none";
-
-      document.getElementById(
-        "registrationError"
-      ).style.display = "none";
-
-      if (subjects.length === 0) {
-
-        showBox(
-          "registrationError",
-          "Please select at least one subject."
-        );
-
-        return;
-      }
-
-      try {
-
-        const registrationId = makeRegistrationId();
-
-        await addDoc(
-          collection(db, "students"),
-          {
-            registrationId,
-            name,
-            school,
-            subjects,
-
-            paid: false,
-
-            createdAt: serverTimestamp()
-          }
-        );
-
-        // show a focused registration modal with the ID
-        showRegistrationModal(registrationId);
-
-        document
-          .getElementById("registrationForm")
-          .reset();
-
-        loadStats();
-
-      } catch (error) {
-
-        console.error(error);
-
-        showBox(
-          "registrationError",
-          "Registration failed. Please try again."
-        );
-      }
-
-    });
-
-  /* ---------------------------
-     PAYMENT STATUS
-  --------------------------- */
-
-  document
-    .getElementById("checkStatus")
-    .addEventListener("click", async () => {
-
-      const id =
-        document.getElementById("statusId").value.trim();
-
-      const result =
-        document.getElementById("statusResult");
-
-      result.style.display = "block";
-
-      if (!id) {
-
-        result.innerHTML =
-          "Please enter your registration ID.";
-
-        return;
-      }
-
-      try {
-
-        const q = query(
-          collection(db, "students"),
-          where("registrationId", "==", id),
-          limit(1)
-        );
-
-        const snapshot = await getDocs(q);
-
-        if (snapshot.empty) {
-
-          result.innerHTML =
-            "Registration ID not found.";
-
-          return;
-        }
-
-        const student = snapshot.docs[0].data();
-
-        if (student.paid) {
-
-          result.innerHTML = `
-            <h3>Payment Confirmed ✅</h3>
-            <p>
-              <strong>${student.name}</strong>
-            </p>
-            <p>
-              School: ${student.school}
-            </p>
-            <p>
-              Subjects: ${student.subjects.join(", ")}
-            </p>
-            <p class="paid">
-              Your payment has been confirmed by PCAB Academy.
-            </p>
-          `;
-
-        } else {
-
-          result.innerHTML = `
-            <h3>Payment Not Yet Confirmed</h3>
-            <p>
-              <strong>${student.name}</strong>
-            </p>
-            <p>
-              School: ${student.school}
-            </p>
-            <p>
-              Subjects: ${student.subjects.join(", ")}
-            </p>
-            <p class="unpaid">
-              PCAB Academy has not yet confirmed your payment.
-            </p>
-            <br>
-            <p>
-              If you have already paid, contact PCAB Administration
-              and provide your payment proof.
-            </p>
-          `;
-        }
-
-      } catch (error) {
-
-        console.error(error);
-
-        result.innerHTML =
-          "Unable to check status right now.";
-      }
-
-    });
-
-  /* ---------------------------
-     STATS
-  --------------------------- */
-
-  async function loadStats() {
+    if (subjects.length === 0) {
+      showBox("registrationError", "Please select at least one subject.");
+      return;
+    }
 
     try {
-
-      const snapshot =
-        await getDocs(collection(db, "students"));
-
-      let paid = 0;
-
-      snapshot.forEach(doc => {
-
-        if (doc.data().paid === true) {
-          paid++;
-        }
-
+      const registrationId = makeRegistrationId();
+      await addDoc(collection(db, "students"), {
+        registrationId,
+        name,
+        school,
+        subjects,
+        paid: false,
+        createdAt: serverTimestamp()
       });
-
-      document.getElementById(
-        "totalStudents"
-      ).textContent = snapshot.size;
-
-      document.getElementById(
-        "paidStudents"
-      ).textContent = paid;
-
-    } catch (error) {
-
-      console.error(error);
+      showRegistrationModal(registrationId);
+      document.getElementById("registrationForm").reset();
+      loadStats();
+    } catch (err) {
+      console.error(err);
+      showBox("registrationError", "Registration failed. Please try again.");
     }
+  });
+
+  // Status
+  document.getElementById("checkStatus").addEventListener("click", async () => {
+    const id = document.getElementById("statusId").value.trim();
+    const result = document.getElementById("statusResult");
+    result.style.display = "block";
+
+    if (!id) {
+      result.innerHTML = "Please enter your registration ID.";
+      return;
+    }
+
+    try {
+      const q = query(collection(db, "students"), where("registrationId", "==", id), limit(1));
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) {
+        result.innerHTML = "Registration ID not found.";
+        return;
+      }
+      const student = snapshot.docs[0].data();
+      if (student.paid) {
+        result.innerHTML = `
+          <h3>Payment Confirmed ✅</h3>
+          <p><strong>${student.name}</strong></p>
+          <p>School: ${student.school}</p>
+          <p>Subjects: ${student.subjects.join(", ")}</p>
+          <p class="paid">Your payment has been confirmed by PCAB Academy.</p>
+        `;
+      } else {
+        result.innerHTML = `
+          <h3>Payment Not Yet Confirmed</h3>
+          <p><strong>${student.name}</strong></p>
+          <p>School: ${student.school}</p>
+          <p>Subjects: ${student.subjects.join(", ")}</p>
+          <p class="unpaid">PCAB Academy has not yet confirmed your payment.</p>
+          <br>
+          <p>If you have already paid, contact PCAB Administration and provide your payment proof.</p>
+        `;
+      }
+    } catch (err) {
+      console.error(err);
+      result.innerHTML = "Unable to check status right now.";
+    }
+  });
+
+  // Stats
+  async function loadStats() {
+    try {
+      const snapshot = await getDocs(collection(db, "students"));
+      let paid = 0;
+      snapshot.forEach(doc => { if (doc.data().paid === true) paid++; });
+      document.getElementById("totalStudents").textContent = snapshot.size;
+      document.getElementById("paidStudents").textContent = paid;
+    } catch (err) { console.error(err); }
   }
 
-  /* ---------------------------
-     REVIEWS
-  --------------------------- */
-
-  document
-    .getElementById("reviewForm")
-    .addEventListener("submit", async event => {
-
-      event.preventDefault();
-
-      const name =
-        document.getElementById("reviewName").value.trim();
-
-      const text =
-        document.getElementById("reviewText").value.trim();
-
-      if (!name || !text) return;
-
-      try {
-
-        await addDoc(
-          collection(db, "reviews"),
-          {
-            name,
-            text,
-            createdAt: serverTimestamp()
-          }
-        );
-
-        document
-          .getElementById("reviewForm")
-          .reset();
-
-        loadReviews();
-
-      } catch (error) {
-
-        console.error(error);
-
-        alert("Unable to submit your view.");
-      }
-
-    });
+  // Reviews
+  document.getElementById("reviewForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("reviewName").value.trim();
+    const text = document.getElementById("reviewText").value.trim();
+    if (!name || !text) return;
+    try {
+      await addDoc(collection(db, "reviews"), { name, text, createdAt: serverTimestamp() });
+      document.getElementById("reviewForm").reset();
+      loadReviews();
+    } catch (err) {
+      console.error(err);
+      alert("Unable to submit your view.");
+    }
+  });
 
   async function loadReviews() {
-
     try {
-
-      const q = query(
-        collection(db, "reviews"),
-        orderBy("createdAt", "desc"),
-        limit(30)
-      );
-
+      const q = query(collection(db, "reviews"), orderBy("createdAt", "desc"), limit(30));
       const snapshot = await getDocs(q);
-
-      const list =
-        document.getElementById("reviewList");
-
+      const list = document.getElementById("reviewList");
       list.innerHTML = "";
-
       snapshot.forEach(item => {
-
         const review = item.data();
-
-        const div =
-          document.createElement("div");
-
+        const div = document.createElement("div");
         div.className = "review";
-
-        div.innerHTML = `
-          <strong>${escapeHTML(review.name)}</strong>
-          <p>${escapeHTML(review.text)}</p>
-        `;
-
+        div.innerHTML = `<strong>${escapeHTML(review.name)}</strong><p>${escapeHTML(review.text)}</p>`;
         list.appendChild(div);
-
       });
-
-    } catch (error) {
-
-      console.error(error);
-    }
+    } catch (err) { console.error(err); }
   }
 
   function escapeHTML(value) {
-
     const div = document.createElement("div");
-
     div.textContent = value;
-
     return div.innerHTML;
   }
 
   loadStats();
   loadReviews();
 
-</script>
-
-<!-- Registration Modal -->
-<div id="regModal" class="modal" role="dialog" aria-modal="true">
-  <div class="modal-card" role="document">
-    <h3>Registration Successful</h3>
-    <div>
-      <div>Save this Registration ID — you'll need it to check payment status.</div>
-      <div id="regIdValue" class="reg-id">PCAB-XXXXXX</div>
-    </div>
-
-    <div class="modal-actions">
-      <button id="copyReg" class="btn btn-primary">Copy ID</button>
-      <button id="closeReg" class="btn btn-secondary">Close</button>
-    </div>
-  </div>
-</div>
-
-<script>
-  function showRegistrationModal(id) {
+  // Modal functions (global for inline script)
+  window.showRegistrationModal = function(id) {
     const modal = document.getElementById('regModal');
-    const val = document.getElementById('regIdValue');
-
-    val.textContent = id;
+    document.getElementById('regIdValue').textContent = id;
     modal.classList.add('open');
+    try { history.replaceState(null, '', '#registered-' + id); } catch(e) {}
+  };
 
-    // set hash so user can revisit link if desired
-    try { history.replaceState(null, '', '#registered-' + id); } catch (e) {}
-  }
+  window.hideRegistrationModal = function() {
+    document.getElementById('regModal').classList.remove('open');
+  };
 
-  function hideRegistrationModal() {
-    const modal = document.getElementById('regModal');
-    modal.classList.remove('open');
-  }
-
-  document.getElementById('closeReg').addEventListener('click', hideRegistrationModal);
-
+  document.getElementById('closeReg').addEventListener('click', () => window.hideRegistrationModal());
   document.getElementById('copyReg').addEventListener('click', async () => {
     const text = document.getElementById('regIdValue').textContent;
     try {
@@ -1650,38 +1468,27 @@
       document.getElementById('copyReg').textContent = 'Copied';
       setTimeout(() => document.getElementById('copyReg').textContent = 'Copy ID', 2000);
     } catch (e) {
-      alert('Copy not supported. Please copy the ID manually: ' + text);
+      alert('Copy not supported. Please copy manually: ' + text);
     }
   });
 
-  // close modal on ESC
   document.addEventListener('keydown', (ev) => {
-    if (ev.key === 'Escape') hideRegistrationModal();
+    if (ev.key === 'Escape') window.hideRegistrationModal();
   });
 
-  // if URL contains registered ID hash, show it
   document.addEventListener('DOMContentLoaded', () => {
     const m = location.hash.match(/^#registered-(PCAB-[A-Z0-9]{6})$/);
-    if (m) showRegistrationModal(m[1]);
+    if (m) window.showRegistrationModal(m[1]);
   });
-</script>
 
-<script>
-  // Mobile nav toggle
-  document.addEventListener('DOMContentLoaded', function () {
+  // Mobile nav
+  document.addEventListener('DOMContentLoaded', () => {
     const toggle = document.querySelector('.nav-toggle');
     const links = document.querySelector('.nav-links');
-
-    if (!toggle || !links) return;
-
-    toggle.addEventListener('click', () => {
-      links.classList.toggle('open');
-    });
-
-    // close when a link is clicked
-    links.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => links.classList.remove('open'));
-    });
+    if (toggle && links) {
+      toggle.addEventListener('click', () => links.classList.toggle('open'));
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+    }
   });
 </script>
 
